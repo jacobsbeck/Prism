@@ -1,7 +1,6 @@
 __pycache__/
 *.h5
 *.npy
-*.ogg
 *.png
 env/*
 .vscode/*
