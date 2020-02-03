@@ -1,6 +1,17 @@
 # Prism
-Classify with Convolutional Neural Network
-Run cnn.py -t to train and test a CNN. Optionally set how many epochs to train on.
-Predict files by either:
-Putting target files under predict/ directory and running cnn.py -p
-Recording on the fly with cnn.py -P
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+
+## General info
+This project is simple Lorem ipsum dolor generator.
+	
+## Technologies
+Project is created with:
+* Lorem version: 12.3
+* Ipsum version: 2.33
+* Ament library version: 999
+	
+## Setup
+To run this project, install it locally using npm:
