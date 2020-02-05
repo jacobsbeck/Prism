@@ -12,7 +12,7 @@ This is the project Prism, created for the Interactive Media Design Capstone at 
 ## Technologies
 Project is created with:
 * Python 3.6
-* numpy
+* scipy
 * librosa
 * pysoundfile
 * sounddevice
@@ -27,8 +27,8 @@ Project is created with:
 ## Setup
 To run this project, install the appropriate packages:
 ```
-$ pip3 install numpy
-$ pip3 install librosa
+$ sudo pip install scipy
+$ sudo pip install librosa
 $ pip3 install pysoundfile
 $ pip3 install sounddevice
 $ pip3 install matplotlib
@@ -42,8 +42,15 @@ $ pip3 install keyboard
 
 ## Plot Live Microphone
 To test the live microphone, you can run the command line below. I have to use 'sudo' to allow access to my microphone:
+
+if you have both python and python3 downloaded
 ```
 $ sudo python3 streamingAudio.py
+```
+
+if you have only python3 downloaded
+```
+$ sudo python streamingAudio.py
 ```
 
 ## Classify Clap
