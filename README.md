@@ -14,6 +14,7 @@ Project is created with:
 * Python 3.6
 * scipy
 * librosa
+* tensorflow
 * pysoundfile
 * sounddevice
 * matplotlib
@@ -27,17 +28,16 @@ Project is created with:
 ## Setup
 To run this project, install the appropriate packages:
 ```
-$ sudo pip install scipy
-$ sudo pip install librosa
-$ pip3 install pysoundfile
-$ pip3 install sounddevice
-$ pip3 install matplotlib
-$ pip3 install scikit-learn
-$ pip3 install tensorflow
-$ pip3 install keras
-$ pip3 install pyaudiio
-$ pip3 install wave
-$ pip3 install keyboard
+$ pip install scipy==1.2.3
+$ pip install librosa==0.6.0
+$ pip install matplotlib
+$ pip install pyaudio
+$ pip install wave
+$ pip install keyboard
+$ pip install tensorflow
+$ pip install pysoundfile
+$ pip install sounddevice
+$ pip install keras
 ```
 
 ## Plot Live Microphone
