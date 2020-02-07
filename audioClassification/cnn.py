@@ -46,7 +46,7 @@ def train(args):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=233)
 
     # Count the number of sub-directories in 'data'
-    class_count = len(next(os.walk('data/'))[1])
+    class_count = len(next(os.walk('data/'))[1]) + 1
 
     # Build the Neural Network
     model = Sequential()
@@ -60,6 +60,8 @@ def train(args):
     model.add(Dense(class_count, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
+    print(y_train)
+    print(class_count)
     # Convert label to onehot
     y_train = keras.utils.to_categorical(y_train, num_classes=class_count)
     y_test = keras.utils.to_categorical(y_test, num_classes=class_count)
@@ -96,6 +98,7 @@ def real_time_predict(args):
     import queue
     import librosa
     import sys
+    bool isOn = false
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip.begin()
     if op.exists(args.model):
@@ -111,14 +114,15 @@ def real_time_predict(args):
                 pred = model.predict_classes(features)
                 for p in pred:
                     print(p)
-                    #b = int(round(255/p))
-                    if (p == 2):
+                    b = int(round(255/p))
+                    if (p == 5):
                         for i in range(strip.numPixels()):
-                            strip.setPixelColor(i, Color(255, 0, 0))
-                            strip.show()
-                    else:
-                        for i in range(strip.numPixels()):
-                            strip.setPixelColor(i, Color(0, 0, 0))
+                            if (isOn):
+                                strip.setPixelColor(i, Color(0, 0, 0))
+                                isOn = False
+                            else:
+                                strip.setPixelColor(i, Color(255, 0, 0))
+                                isOn = True
                             strip.show()
                     
                     if args.verbose: print('Time elapsed in real time feature extraction: ', time.time() - start)
