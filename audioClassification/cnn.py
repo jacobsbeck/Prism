@@ -99,7 +99,7 @@ def real_time_predict(args):
     import queue
     import librosa
     import sys
-    bool isOn = false
+    isLightOn = False
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip.begin()
     if op.exists(args.model):
@@ -115,16 +115,17 @@ def real_time_predict(args):
                 pred = model.predict_classes(features)
                 for p in pred:
                     print(p)
-                    b = int(round(255/p))
                     if (p == 5):
                         for i in range(strip.numPixels()):
-                            if (isOn):
+                            if (isLightOn):
                                 strip.setPixelColor(i, Color(0, 0, 0))
-                                isOn = False
                             else:
                                 strip.setPixelColor(i, Color(255, 0, 0))
-                                isOn = True
-                            strip.show()
+                        if (isLightOn):
+                            isLightOn = False
+                        else:
+                            isLightOn = True
+                        strip.show()
                     
                     if args.verbose: print('Time elapsed in real time feature extraction: ', time.time() - start)
                     sys.stdout.flush()
