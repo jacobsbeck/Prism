@@ -17,7 +17,7 @@ form_1 = pyaudio.paInt16 # 16-bit resolution
 chans = 1 # 1 channel
 samp_rate = 48000 # 44.1kHz sampling rate
 chunk = 4096 # 2^12 samples for buffer
-dev_index = 2 # device index found by p.get_device_info_by_index(i)
+dev_index = 0 # device index found by p.get_device_info_by_index(i)
 wav_output_filename = 'demo.wav' # name of .wav file
 #microphone_name = 'Logitech USB Microphone' # name of the microphone being used
 microphone_name = 'Blue Snowball' # name of the microphone being used
@@ -65,7 +65,7 @@ def callback(in_data, frame_count, time_info, status):
     return (in_data, pyaudio.paContinue)
 
 def main():
-    #listAudioSources()
+    listAudioSources()
 
     still_streaming = True
     i = 0
