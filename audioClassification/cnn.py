@@ -21,6 +21,19 @@ import os
 import os.path as op
 from sklearn.model_selection import train_test_split
 
+from neopixel import *
+
+# LED strip configuration:
+LED_COUNT      = 300      # Number of LED pixels.
+LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
+#LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
+LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
+LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
+LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
+LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
+LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+
+
 def train(args):
     if not op.exists('feat.npy') or not op.exists('label.npy'):
         if input('No feature/labels found. Run feat_extract.py first? (Y/n)').lower() in ['y', 'yes', '']:
@@ -83,6 +96,8 @@ def real_time_predict(args):
     import queue
     import librosa
     import sys
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    strip.begin()
     if op.exists(args.model):
         model = keras.models.load_model(args.model)
         while True:
@@ -96,9 +111,23 @@ def real_time_predict(args):
                 pred = model.predict_classes(features)
                 for p in pred:
                     print(p)
+                    #b = int(round(255/p))
+                    if (p == 2):
+                        for i in range(strip.numPixels()):
+                            strip.setPixelColor(i, Color(255, 0, 0))
+                            strip.show()
+                    else:
+                        for i in range(strip.numPixels()):
+                            strip.setPixelColor(i, Color(0, 0, 0))
+                            strip.show()
+                    
                     if args.verbose: print('Time elapsed in real time feature extraction: ', time.time() - start)
                     sys.stdout.flush()
-            except KeyboardInterrupt: parser.exit(0)
+            except KeyboardInterrupt:
+                for i in range(strip.numPixels()):
+                    strip.setPixelColor(i, Color(0, 0, 0))
+                strip.show()
+                parser.exit(0)
             except Exception as e: parser.exit(type(e).__name__ + ': ' + str(e))
     elif input('Model not found. Train network first? (y/N)') in ['y', 'yes']:
         train()

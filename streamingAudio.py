@@ -5,7 +5,6 @@ try:
 
     import pyaudio
     import wave
-    import keyboard
     import numpy as np
     import matplotlib.pyplot as plt
 except:
@@ -18,10 +17,10 @@ form_1 = pyaudio.paInt16 # 16-bit resolution
 chans = 1 # 1 channel
 samp_rate = 48000 # 44.1kHz sampling rate
 chunk = 4096 # 2^12 samples for buffer
-dev_index = 0 # device index found by p.get_device_info_by_index(i)
+dev_index = 2 # device index found by p.get_device_info_by_index(i)
 wav_output_filename = 'demo.wav' # name of .wav file
 #microphone_name = 'Logitech USB Microphone' # name of the microphone being used
-microphone_name = 'MacBook Pro Microphone' # name of the microphone being used
+microphone_name = 'Blue Snowball' # name of the microphone being used
 
 for i in range(audio.get_device_count()):
     if (microphone_name == audio.get_device_info_by_index(i).get('name')):
@@ -71,17 +70,15 @@ def main():
     still_streaming = True
     i = 0
     print("please make a noise in the microphone")
-    print("hold q to quit")
     while (still_streaming):
-        if keyboard.is_pressed('q'):
-            still_streaming = False
-            break
-        else:
+        try: 
             record_to_file("detectedsounds/demo" + i.__str__() + ".wav")
             print("demo" + i.__str__() + " .wav created")
             i += 1
+        except KeyboardInterrupt:
+            break
     print("done - results written to the folder detectedsounds")
-
+     
 def is_silent(snd_data):
     "Returns 'True' if below the 'silent' threshold"
     return max(snd_data) < threshold
@@ -138,9 +135,15 @@ def record():
     it without getting chopped off.
     """
     p = pyaudio.PyAudio()
-    stream = p.open(format = form_1,rate = samp_rate,channels = chans, \
-                    input_device_index = dev_index,input = True, output=True, \
-                    frames_per_buffer=chunk)
+    #stream = p.open(format = form_1,rate = samp_rate,channels = chans, \
+    #                input_device_index = dev_index,input = True, output=True, \
+    #                frames_per_buffer=chunk)
+    stream = p.open(format=form_1,
+                channels=chans,
+                rate=samp_rate,
+                frames_per_buffer=chunk,
+                input=True)
+
 
     num_silent = 0
     snd_started = False
