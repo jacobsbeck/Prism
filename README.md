@@ -8,7 +8,7 @@
 * [Light Pattern Testing](#light-pattern-testing)
 
 ## General info
-This is the project Prism, created for the Interactive Media Design Capstone at University of Washington Bothell. This project uses a Raspberry Pi 4 and a Blue Snowball microphone to manipulate light. This project utilizes audio classification, noise cancellation, and machine learning to create a unique audio to light expereince. The audio calssification model I used for this project is based off of [this](https://github.com/mtobeiyf/audio-classification) different project I found during my research.
+Hello! This is the project Prism, created for the Interactive Media Design 2020 Capstone at the University of Washington Bothell. This project uses a Raspberry Pi 4 and a Blue Snowball microphone to manipulate lights. This project utilizes audio classification, noise cancellation, and machine learning to create a unique audio to light expereince. The audio calssification model I used for this project is based off of [this](https://github.com/mtobeiyf/audio-classification) project I found during my research.
 	
 ## Technologies
 Project is created with:
