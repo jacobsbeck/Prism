@@ -3,11 +3,12 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
-* [Plot Live Microphone](#plot-live-microphone)
 * [Classify Clap](#classify-clap)
+* [Speech Recognition](#speech-recognition)
+* [Light Pattern Testing](#light-pattern-testing)
 
 ## General info
-This is the project Prism, created for the Interactive Media Design Capstone at University of Washington Bothell.
+Hello! This is the project Prism, created for the Interactive Media Design 2020 Capstone at the University of Washington Bothell. This project uses a Raspberry Pi 4 and a Blue Snowball microphone to manipulate lights. This project utilizes audio classification, noise cancellation, and machine learning to create a unique audio to light expereince. The audio calssification model I used for this project is based off of [this](https://github.com/mtobeiyf/audio-classification) project I found during my research.
 	
 ## Technologies
 Project is created with:
@@ -24,6 +25,9 @@ Project is created with:
 * pyaudio
 * wave
 * keyboard
+* rpi-ws281x
+* speechrecognition
+* google-cloud-speech
 	
 ## Setup
 To run this project, install the appropriate packages:
@@ -38,32 +42,30 @@ $ pip install tensorflow
 $ pip install pysoundfile
 $ pip install sounddevice
 $ pip install keras
-```
-
-## Plot Live Microphone
-To test the live microphone, you can run the command line below. I have to use 'sudo' to allow access to my microphone:
-
-if you have both python and python3 downloaded
-```
-$ sudo python3 streamingAudio.py
-```
-
-if you have only python3 downloaded
-```
-$ sudo python streamingAudio.py
+$ pip install numpy
+$ pip install rpi-ws281x
+$ pip install scikit-learn
+$ pip install speechrecognition
+$ pip install google-cloud-speech
 ```
 
 ## Classify Clap
-Before you can start classifying a live microphone or wave file, we need to train it:
+Before you can start classifying a live microphone, we need to train it:
 ```
-$ python3 audioClassification/cnn.py -t
+$ sudo ./train.sh
 ```
-Predict files by either:
-* Putting target files under the audioClassification/predict/ directory
+* After we train the classifier, you can run the program:
 ```
-$ python3 audioClassification/cnn.py -p
+$ sudo ./start.sh
 ```
-* Recording on the fly
+
+## Speech Recognition
 ```
-$ python3 audioClassification/cnn.py -P
+$ sudo ./speechStart.sh
 ```
+
+## Light Pattern Testing
+```
+$ sudo ./testpatternStart.sh
+```
+
