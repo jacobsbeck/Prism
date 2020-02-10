@@ -61,8 +61,6 @@ def train(args):
     model.add(Dense(class_count, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
-    print(y_train)
-    print(class_count)
     # Convert label to onehot
     y_train = keras.utils.to_categorical(y_train, num_classes=class_count)
     y_test = keras.utils.to_categorical(y_test, num_classes=class_count)
