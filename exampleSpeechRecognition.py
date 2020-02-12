@@ -1,5 +1,6 @@
 import speech_recognition as sr
 from neopixel import *
+from enum import Enum
 
 # LED strip configuration:
 LED_COUNT      = 300      # Number of LED pixels.
@@ -15,62 +16,214 @@ r = sr.Recognizer()
 
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
 strip.begin()
+Features = Enum('Brighter', 'Dimmer', 'Color', 'Off', 'On', 'Hue', 'Tint', 'Saturation', 'Shade',
+                'Monochromatic', 'Primary', 'Secondary', 'Tertiary', 'Temperature', 'Chroma', 
+                'Contrast', 'Tones', 'Light')
 
-def word_classify_check(translated_audio):
-    word_array = translated_audio.split()
-    for j in range(len(word_array)):
-        cur_word = word_array[j].lower()
-        if (cur_word == "red"):
-            for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(0, 255, 0))
-            strip.show()
-        elif (cur_word == "green"):
-            for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(255, 0, 0))
-            strip.show()
-        elif (cur_word == "blue"):
-            for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(0, 0, 255))
-            strip.show()
-        elif (cur_word == "yellow"):
-            for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(255, 255, 0))
-            strip.show()
-        elif (cur_word == "orange"):
-            for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(128, 255, 0))
-            strip.show()
-        elif (cur_word == "purple"):
-            for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(0, 128, 128))
-            strip.show()
-        elif (cur_word == "white"):
-            for i in range(strip.numPixels()):
-                strip.setPixelColor(i, Color(255, 255, 255))
-            strip.show()
-        elif (cur_word == "black"):
+def main():
+    while True:
+        mic = sr.Microphone()
+        try:
+            with mic as source:
+                r.adjust_for_ambient_noise(source)
+                audio = r.listen(source)
+            cur_str = r.recognize_google(audio)
+            print(cur_str)
+            word_classify_check(cur_str)
+        except KeyboardInterrupt:
             for i in range(strip.numPixels()):
                 strip.setPixelColor(i, Color(0, 0, 0))
             strip.show()
-
-while True:
-    mic = sr.Microphone()
-    try:
-        with mic as source:
-            r.adjust_for_ambient_noise(source)
-            audio = r.listen(source)
-        cur_str = r.recognize_google(audio)
-        print(cur_str)
-        word_classify_check(cur_str)
-    except KeyboardInterrupt:
-        for i in range(strip.numPixels()):
-            strip.setPixelColor(i, Color(0, 0, 0))
-        strip.show()
-        break;
+            break
+            
+        except sr.UnknownValueError: 
+            print("Google Speech Recognition could not understand audio")
         
-    except sr.UnknownValueError: 
-        print("Google Speech Recognition could not understand audio") 
-      
-    except sr.RequestError as e: 
-        print("Could not request results from Google Speech Recognition service; {0}".format(e))
+        except sr.RequestError as e: 
+            print("Could not request results from Google Speech Recognition service; {0}".format(e))
+
+def word_classify_check(translated_audio):
+    word_array = translated_audio.split()
+    color = Color(0, 0, 0)
+    is_negative_sentence = False
+    is_down = False
+    for j in range(len(word_array)):
+        cur_word = word_array[j].lower()
+        if (is_negative_sentence == False):
+            is_negative_sentence = negativeCheck(cur_word)
+        if (is_down == False):
+            is_down = downCheck(cur_word)
+        if (color != null):
+            color = colorCheck(cur_word)
     
+        feat = featureCheck(cur_word)
+
+    if (is_negative_sentence == False):
+        if (feat == Features.Brighter):
+            if (is_down == False):
+                if (strip.getBrightness() >= 215):
+                    strip.setBrightness(255)
+                else:
+                    strip.setBrightness(strip.getBrightness() + 40)
+            else:
+                if (strip.getBrightness() <= 40):
+                    strip.setBrightness(0)
+                else:
+                    strip.setBrightness(strip.getBrightness() - 40)
+        elif (feat == Features.Dimmer):
+            if (is_down == False):
+                if (strip.getBrightness() <= 40):
+                    strip.setBrightness(0)
+                else:
+                    strip.setBrightness(strip.getBrightness() - 40)
+            else:
+                if (strip.getBrightness() >= 215):
+                    strip.setBrightness(255)
+                else:
+                    strip.setBrightness(strip.getBrightness() + 40)
+        elif (feat == Features.Off):
+            strip.setBrightness(0)
+        elif (feat == Features.On):
+            strip.setBrightness(255)
+    
+
+    if (feat == Features.Primary):
+        primaryPattern()
+    elif (feat == Features.Secondary):
+        secondaryPattern()
+    elif (feat == Features.Tertiary):
+        tertiaryPattern()
+    strip.show()
+
+def primaryPattern():
+    for i in range(LED_COUNT):
+        if (i / 25 == 0):
+            strip.setPixelColor(i, Color(255, 255, 0))
+        elif (i / 25 == 4):
+            strip.setPixelColor(i, Color(0, 0, 255))
+        elif (i / 25 == 8):
+            strip.setPixelColor(i, Color(0, 255, 0))
+        
+def secondaryPattern():
+    for i in range(LED_COUNT):
+        if (i / 25 == 2):
+            strip.setPixelColor(i, Color(255, 0, 0))
+        elif (i / 25 == 6):
+            strip.setPixelColor(i, Color(238,130,238))
+        elif (i / 25 == 10):
+            strip.setPixelColor(i, Color(128, 255, 0))
+
+def tertiaryPattern():
+    for i in range(LED_COUNT):
+        if (i / 25 == 1):
+            strip.setPixelColor(i, Color(154,205,50))
+        elif (i / 25 == 3):
+            strip.setPixelColor(i, Color(0, 221, 221))
+        elif (i / 25 == 5):
+            strip.setPixelColor(i, Color(138, 43, 226)) 
+        elif (i / 25 == 7):
+            strip.setPixelColor(i, Color(199, 21, 133))
+        elif (i / 25 == 9):
+            strip.setPixelColor(i, Color(255, 69, 0))
+        elif (i / 25 == 11):
+            strip.setPixelColor(i, Color(255, 174, 66))        
+
+def downCheck(word):
+    if (word == "down"):
+        return True
+    elif (word == "lower"):
+        return True
+    elif (word == "minus"):
+        return True
+    elif (word == "less"):
+        return True
+    elif (word == "decline"):
+        return True
+    elif (word == "downgrade"):
+        return True
+    elif (word == "decrease"):
+        return True
+    elif (word == "low"):
+        return True
+    elif (word == "diminished"):
+        return True
+    elif (word == "lessen"):
+        return True
+    elif (word == "lessened"):
+        return True
+    elif (word == "lesser"):
+        return True
+    elif (word == "reduce"):
+        return True
+    elif (word == "reduced"):
+        return True
+    return False
+
+def featureCheck(word):
+    if (word == "brighter" or word == "brightness"):
+        return Features.Brighter
+    elif (word == "dimmer" or word == "dimness"):
+        return Features.Dimmer
+    elif (word == "color"):
+        return Features.Color
+    elif (word == "off"):
+        return Features.Off
+    elif (word == "on"):
+        return Features.On
+    elif (word == "hue"):
+        return Features.Hue
+    elif (word == "tint"):
+        return Features.Tint
+    elif (word == "saturation"):
+        return Features.Saturation
+    elif (word == "shade"):
+        return Features.Shade
+    elif (word == "monochromatic"):
+        return Features.Monochromatic
+    elif (word == "primary"):
+        return Features.Primary
+    elif (word == "secondary"):
+        return Features.Secondary
+    elif (word == "tertiary"):
+        return Features.Tertiary
+    elif (word == "temperature"):
+        return Features.Temperature
+    elif (word == "chroma"):
+        return Features.Chroma
+    elif (word == "contrast"):
+        return Features.Contrast
+    elif (word == "tones"):
+        return Features.Tones
+    elif (word == "light"):
+        return Features.Light
+    return null
+
+def negativeCheck(word):
+    if (word == "don't"):
+        return True
+    elif (word == "not"):
+        return True
+    elif (word == "no"):
+        return True
+    return False
+
+def colorCheck(word):
+    if (word == "red"):
+        return Color(0, 255, 0)
+    elif (word == "green"):
+        return Color(255, 0, 0)
+    elif (word == "blue"):
+        return Color(0, 0, 255)
+    elif (word == "yellow"):
+        return Color(255, 255, 0)
+    elif (word == "orange"):
+        return Color(128, 255, 0)
+    elif (word == "purple"):
+        return Color(0, 128, 128)
+    elif (word == "white"):
+        return Color(255, 255, 255)
+    elif (word == "black"):
+        return Color(0, 0, 0)
+    return null
+
+main()
