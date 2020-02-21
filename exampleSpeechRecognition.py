@@ -1,6 +1,9 @@
 import speech_recognition as sr
 from neopixel import *
 from enum import Enum
+import random
+import colorsys
+
 
 # LED strip configuration:
 LED_COUNT      = 300      # Number of LED pixels.
@@ -47,12 +50,18 @@ def word_classify_check(translated_audio):
     color = Color(0, 0, 0)
     is_negative_sentence = False
     is_down = False
+    is_up = False
+    randomize = False
     for j in range(len(word_array)):
         cur_word = word_array[j].lower()
+        if (randomize == False):
+            randomize = randomCheck(cur_word)
         if (is_negative_sentence == False):
             is_negative_sentence = negativeCheck(cur_word)
         if (is_down == False):
             is_down = downCheck(cur_word)
+        if (is_up == False):
+            is_up = upCheck(cur_word)
         if (color != null):
             color = colorCheck(cur_word)
     
@@ -60,40 +69,83 @@ def word_classify_check(translated_audio):
 
     if (is_negative_sentence == False):
         if (feat == Features.Brighter):
-            if (is_down == False):
-                if (strip.getBrightness() >= 215):
-                    strip.setBrightness(255)
-                else:
-                    strip.setBrightness(strip.getBrightness() + 40)
-            else:
-                if (strip.getBrightness() <= 40):
-                    strip.setBrightness(0)
-                else:
-                    strip.setBrightness(strip.getBrightness() - 40)
+            manipulateBrightness(randomize, is_down)
         elif (feat == Features.Dimmer):
-            if (is_down == False):
-                if (strip.getBrightness() <= 40):
-                    strip.setBrightness(0)
-                else:
-                    strip.setBrightness(strip.getBrightness() - 40)
-            else:
-                if (strip.getBrightness() >= 215):
-                    strip.setBrightness(255)
-                else:
-                    strip.setBrightness(strip.getBrightness() + 40)
+             manipulateDimness(randomize, is_down)
         elif (feat == Features.Off):
             strip.setBrightness(0)
         elif (feat == Features.On):
             strip.setBrightness(255)
-    
+        elif (feat == Features.Hue):
+            if is_up:
+                manipulateHue(randomize, is_down)
+        elif (feat == Features.Tint):
+            applyTint()
+        elif (feat == Features.Shade):
+            applyShade()
+        elif (feat == Features.Tones):
+            applyTone()
+        
 
-    if (feat == Features.Primary):
+    elif (feat == Features.Primary):
         primaryPattern()
     elif (feat == Features.Secondary):
         secondaryPattern()
     elif (feat == Features.Tertiary):
         tertiaryPattern()
     strip.show()
+
+def manipulateBrightness(rand_check, is_down):
+    if (is_down == False):
+        if (strip.getBrightness() >= 215):
+            strip.setBrightness(255)
+        else:
+            strip.setBrightness(strip.getBrightness() + 40)
+    else:
+        if (strip.getBrightness() <= 40):
+            strip.setBrightness(0)
+        else:
+            strip.setBrightness(strip.getBrightness() - 40)
+    if (rand_check == True):
+        strip.setBrightness(random.randrange(0, 255))
+
+def manipulateDimness(rand_check, is_down):
+    if (is_down == False):
+        if (strip.getBrightness() <= 40):
+            strip.setBrightness(0)
+        else:
+            strip.setBrightness(strip.getBrightness() - 40)
+    else:
+        if (strip.getBrightness() >= 215):
+            strip.setBrightness(255)
+        else:
+            strip.setBrightness(strip.getBrightness() + 40)
+    if (rand_check == True):
+        strip.setBrightness(random.randrange(0, 255))
+
+def manipulateHue(rand_check, is_down):
+    for i in range(LED_COUNT):
+        if rand_check:
+            cur_HSV = colorsys.rgb_to_hsv(strip.getPixelColor(i))
+            cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 255) / 255, cur_HSV.index(1), cur_HSV.index(2))
+            strip.setPixelColor(i, Color(cur_RGB.index(0), cur_RGB.index(1), cur_RGB.index(2)))
+        else:
+            cur_HSV = colorsys.rgb_to_hsv(strip.getPixelColor(i))
+            cur_RGB = colorsys.hsv_to_rgb(random.randrange(strip.getPixelColor(i), 255), cur_HSV.index(1), cur_HSV.index(2))
+            strip.setPixelColor(i, Color(random.randrange(strip.getPixelColor(i), 255).red, random.randrange(strip.getPixelColor(i), 255), random.randrange(strip.getPixelColor(i), 255)))
+
+def applyTint():
+    for i in range(LED_COUNT):
+        strip.setPixelColor(i, Color((255 - strip.getPixelColor(i).red) / 2, (255 - strip.getPixelColor(i).green) / 2, (255 - strip.getPixelColor(i).blue) / 2))
+
+def applyShade():
+    for i in range(LED_COUNT):
+        strip.setPixelColor(i, Color(strip.getPixelColor(i).red / 2, strip.getPixelColor(i).green / 2, strip.getPixelColor(i).blue / 2))
+
+def applyTone():
+    grayTone = 211
+    for i in range(LED_COUNT):
+        strip.setPixelColor(i, Color((strip.getPixelColor(i).red + grayTone) / 2, strip.getPixelColor(i).green + grayTone) / 2, strip.getPixelColor(i).blue + grayTone) / 2))
 
 def primaryPattern():
     for i in range(LED_COUNT):
@@ -128,6 +180,7 @@ def tertiaryPattern():
         elif (i / 25 == 11):
             strip.setPixelColor(i, Color(255, 174, 66))        
 
+
 def downCheck(word):
     if (word == "down"):
         return True
@@ -156,6 +209,25 @@ def downCheck(word):
     elif (word == "reduce"):
         return True
     elif (word == "reduced"):
+        return True
+    return False
+
+def upCheck(word):
+    if (word == "up"):
+        return True
+    elif (word == "raise"):
+        return True
+    elif (word == "plus"):
+        return True
+    elif (word == "more"):
+        return True
+    elif (word == "incline"):
+        return True
+    elif (word == "upgrade"):
+        return True
+    elif (word == "increase"):
+        return True
+    elif (word == "high"):
         return True
     return False
 
@@ -225,5 +297,15 @@ def colorCheck(word):
     elif (word == "black"):
         return Color(0, 0, 0)
     return null
+
+def randomCheck(word):
+    if (word == "random"):
+        return True
+    elif (word == "randomize"):
+        return True
+    elif (word == "surprise"):
+        return True
+    elif (word == "unexpected"):
+        return True
 
 main()

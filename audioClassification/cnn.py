@@ -5,6 +5,12 @@
 # Date  : 2017-12-03
 #
 
+#clap = 1
+#stomp? = 2
+#friction = 3
+#click = 4
+#whistle = 5
+
 import feat_extract
 from feat_extract import *
 import time
