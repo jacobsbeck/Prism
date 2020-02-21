@@ -3,6 +3,8 @@ from neopixel import *
 from enum import Enum
 import random
 import colorsys
+from phue import Bridge
+from rgbxy import Converter
 
 
 # LED strip configuration:
@@ -19,9 +21,31 @@ r = sr.Recognizer()
 
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
 strip.begin()
-Features = Enum('Brighter', 'Dimmer', 'Color', 'Off', 'On', 'Hue', 'Tint', 'Saturation', 'Shade',
-                'Monochromatic', 'Primary', 'Secondary', 'Tertiary', 'Temperature', 'Chroma', 
-                'Contrast', 'Tones', 'Light')
+class Features(Enum):
+    Brighter=1
+    Dimmer=2
+    Color=3
+    Off=4
+    On=5
+    Hue=6
+    Tint=7
+    Saturation=8
+    Shade=9
+    Monochromatic=10
+    Primary=11
+    Secondary=12
+    Tertiary=13
+    Temperature=14
+    Chroma=15
+    Contrast=16
+    Tones=17
+    Light=18
+
+converter = Converter()
+
+b = Bridge('10.0.0.149')
+b.connect()
+b.get_api()
 
 def main():
     while True:
@@ -47,44 +71,47 @@ def main():
 
 def word_classify_check(translated_audio):
     word_array = translated_audio.split()
-    color = Color(0, 0, 0)
+    color = None
     is_negative_sentence = False
-    is_down = False
-    is_up = False
+    change_value = 0
     randomize = False
+    feat = None
     for j in range(len(word_array)):
         cur_word = word_array[j].lower()
         if (randomize == False):
             randomize = randomCheck(cur_word)
         if (is_negative_sentence == False):
             is_negative_sentence = negativeCheck(cur_word)
-        if (is_down == False):
-            is_down = downCheck(cur_word)
-        if (is_up == False):
-            is_up = upCheck(cur_word)
-        if (color != null):
+        if (change_value == 0):
+            change_value = downCheck(cur_word)
+        if (change_value == 0):
+            change_value = upCheck(cur_word)
+        if (color == None):
             color = colorCheck(cur_word)
-    
-        feat = featureCheck(cur_word)
+        if (feat == None)
+            feat = featureCheck(cur_word)
 
     if (is_negative_sentence == False):
         if (feat == Features.Brighter):
-            manipulateBrightness(randomize, is_down)
+            manipulateBrightness(randomize, change_value)
         elif (feat == Features.Dimmer):
-             manipulateDimness(randomize, is_down)
+             manipulateDimness(randomize, change_value)
         elif (feat == Features.Off):
             strip.setBrightness(0)
+            b.set_light(2, 'bri', 0)
         elif (feat == Features.On):
             strip.setBrightness(255)
+            b.set_light(2, 'bri', 255)
         elif (feat == Features.Hue):
-            if is_up:
-                manipulateHue(randomize, is_down)
+            manipulateHue(randomize, change_value)
         elif (feat == Features.Tint):
             applyTint()
         elif (feat == Features.Shade):
             applyShade()
         elif (feat == Features.Tones):
             applyTone()
+        elif (feat == Feature.Saturation):
+            manipulateSaturation(randomize, change_value)
         
 
     elif (feat == Features.Primary):
@@ -93,47 +120,111 @@ def word_classify_check(translated_audio):
         secondaryPattern()
     elif (feat == Features.Tertiary):
         tertiaryPattern()
+    elif (color != None):
+        print(color)
+        for i in range(LED_COUNT):
+            strip.setPixelColor(i, color)
+        b.set_light(2, 'xy', converter.rgb_to_xy(color.red, color.green, color.blue))
     strip.show()
 
-def manipulateBrightness(rand_check, is_down):
-    if (is_down == False):
+def manipulateBrightness(rand_check, change):
+    if (change >= 0):
         if (strip.getBrightness() >= 215):
             strip.setBrightness(255)
+            b.set_light(2, 'bri', 255)
         else:
             strip.setBrightness(strip.getBrightness() + 40)
+            b.set_light(2, 'bri', b.get_light(2, 'bri') + 40)
     else:
         if (strip.getBrightness() <= 40):
             strip.setBrightness(0)
+            b.set_light(2, 'bri', 0)
         else:
             strip.setBrightness(strip.getBrightness() - 40)
+            b.set_light(2, 'bri', b.get_light(2, 'bri') - 40)
     if (rand_check == True):
         strip.setBrightness(random.randrange(0, 255))
+        b.set_light(2, 'bri', random.randrange(0, 255))
 
-def manipulateDimness(rand_check, is_down):
-    if (is_down == False):
+def manipulateDimness(rand_check, change):
+    if (change >= 0):
         if (strip.getBrightness() <= 40):
             strip.setBrightness(0)
+            b.set_light(2, 'bri', 0)
         else:
             strip.setBrightness(strip.getBrightness() - 40)
+            b.set_light(2, 'bri', b.get_light(2, 'bri') - 40)
     else:
         if (strip.getBrightness() >= 215):
             strip.setBrightness(255)
+            b.set_light(2, 'bri', 255)
         else:
             strip.setBrightness(strip.getBrightness() + 40)
+            b.set_light(2, 'bri', b.get_light(2, 'bri') + 40)
     if (rand_check == True):
         strip.setBrightness(random.randrange(0, 255))
+        b.set_light(2, 'bri', random.randrange(0, 255))
 
-def manipulateHue(rand_check, is_down):
+def manipulateSaturation(rand_check, change):
+    for i in range(LED_COUNT):
+        if rand_check:
+            cur_HSV = colorsys.rgb_to_hsv(strip.getPixelColor(i))
+            cur_RGB = colorsys.hsv_to_rgb(cur_HSV.index(0), random.randrange(0, 100) / 100, cur_HSV.index(2))
+            strip.setPixelColor(i, Color(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+        elif change >= 0:
+            cur_HSV = colorsys.rgb_to_hsv(strip.getPixelColor(i))
+            cur_RGB = colorsys.hsv_to_rgb(cur_HSV.index(0), random.randrange(cur_HSV.index(1) * 100, 100) / 255, cur_HSV.index(2))
+            strip.setPixelColor(i, Color(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+        else:
+            cur_HSV = colorsys.rgb_to_hsv(strip.getPixelColor(i))
+            cur_RGB = colorsys.hsv_to_rgb(cur_HSV.index(0), random.randrange(0, cur_HSV.index(2)) / 255, cur_HSV.index(2))
+            strip.setPixelColor(i, Color(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+    if rand_check:
+        rgb_value = converter.xy_to_rgb(b.get_light(2, 'xy'))
+        cur_HSV = colorsys.rgb_to_hsv(rgb_value.index(0),rgb_value.index(1), rgb_value.index(2))
+        cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 255) / 255, cur_HSV.index(1), cur_HSV.index(2))
+        b.set_light(2, 'xy', converter.rgb_to_xy(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+    elif change >= 0:
+        rgb_value = converter.xy_to_rgb(b.get_light(2, 'xy'))
+        cur_HSV = colorsys.rgb_to_hsv(rgb_value.index(0),rgb_value.index(1), rgb_value.index(2))
+        cur_RGB = colorsys.hsv_to_rgb(random.randrange(cur_HSV.index(0), 255) / 255, cur_HSV.index(1), cur_HSV.index(2))
+        b.set_light(2, 'xy', converter.rgb_to_xy(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+    else:
+        rgb_value = converter.xy_to_rgb(b.get_light(2, 'xy'))
+        cur_HSV = colorsys.rgb_to_hsv(rgb_value.index(0),rgb_value.index(1), rgb_value.index(2))
+        cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, cur_HSV.index(0)) / 255, cur_HSV.index(1), cur_HSV.index(2))
+        b.set_light(2, 'xy', converter.rgb_to_xy(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+        
+def manipulateHue(rand_check, change):
     for i in range(LED_COUNT):
         if rand_check:
             cur_HSV = colorsys.rgb_to_hsv(strip.getPixelColor(i))
             cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 255) / 255, cur_HSV.index(1), cur_HSV.index(2))
-            strip.setPixelColor(i, Color(cur_RGB.index(0), cur_RGB.index(1), cur_RGB.index(2)))
+            strip.setPixelColor(i, Color(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+        elif change >= 0:
+            cur_HSV = colorsys.rgb_to_hsv(strip.getPixelColor(i))
+            cur_RGB = colorsys.hsv_to_rgb(random.randrange(cur_HSV.index(0), 255) / 255, cur_HSV.index(1), cur_HSV.index(2))
+            strip.setPixelColor(i, Color(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
         else:
             cur_HSV = colorsys.rgb_to_hsv(strip.getPixelColor(i))
-            cur_RGB = colorsys.hsv_to_rgb(random.randrange(strip.getPixelColor(i), 255), cur_HSV.index(1), cur_HSV.index(2))
-            strip.setPixelColor(i, Color(random.randrange(strip.getPixelColor(i), 255).red, random.randrange(strip.getPixelColor(i), 255), random.randrange(strip.getPixelColor(i), 255)))
-
+            cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, cur_HSV.index(0)) / 255, cur_HSV.index(1), cur_HSV.index(2))
+            strip.setPixelColor(i, Color(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+    if rand_check:
+        rgb_value = converter.xy_to_rgb(b.get_light(2, 'xy'))
+        cur_HSV = colorsys.rgb_to_hsv(rgb_value.index(0),rgb_value.index(1), rgb_value.index(2))
+        cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 255) / 255, cur_HSV.index(1), cur_HSV.index(2))
+        b.set_light(2, 'xy', converter.rgb_to_xy(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+    elif change >= 0:
+        rgb_value = converter.xy_to_rgb(b.get_light(2, 'xy'))
+        cur_HSV = colorsys.rgb_to_hsv(rgb_value.index(0),rgb_value.index(1), rgb_value.index(2))
+        cur_RGB = colorsys.hsv_to_rgb(random.randrange(cur_HSV.index(0), 255) / 255, cur_HSV.index(1), cur_HSV.index(2))
+        b.set_light(2, 'xy', converter.rgb_to_xy(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+    else:
+        rgb_value = converter.xy_to_rgb(b.get_light(2, 'xy'))
+        cur_HSV = colorsys.rgb_to_hsv(rgb_value.index(0),rgb_value.index(1), rgb_value.index(2))
+        cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, cur_HSV.index(0)) / 255, cur_HSV.index(1), cur_HSV.index(2))
+        b.set_light(2, 'xy', converter.rgb_to_xy(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+        
 def applyTint():
     for i in range(LED_COUNT):
         strip.setPixelColor(i, Color((255 - strip.getPixelColor(i).red) / 2, (255 - strip.getPixelColor(i).green) / 2, (255 - strip.getPixelColor(i).blue) / 2))
@@ -145,7 +236,7 @@ def applyShade():
 def applyTone():
     grayTone = 211
     for i in range(LED_COUNT):
-        strip.setPixelColor(i, Color((strip.getPixelColor(i).red + grayTone) / 2, strip.getPixelColor(i).green + grayTone) / 2, strip.getPixelColor(i).blue + grayTone) / 2))
+        strip.setPixelColor(i, Color((strip.getPixelColor(i).red + grayTone) / 2, (strip.getPixelColor(i).green + grayTone) / 2, (strip.getPixelColor(i).blue + grayTone) / 2))
 
 def primaryPattern():
     for i in range(LED_COUNT):
@@ -183,53 +274,53 @@ def tertiaryPattern():
 
 def downCheck(word):
     if (word == "down"):
-        return True
+        return -1
     elif (word == "lower"):
-        return True
+        return -1
     elif (word == "minus"):
-        return True
+        return -1
     elif (word == "less"):
-        return True
+        return -1
     elif (word == "decline"):
-        return True
+        return -1
     elif (word == "downgrade"):
-        return True
+        return -1
     elif (word == "decrease"):
-        return True
+        return -1
     elif (word == "low"):
-        return True
+        return -1
     elif (word == "diminished"):
-        return True
+        return -1
     elif (word == "lessen"):
-        return True
+        return -1
     elif (word == "lessened"):
-        return True
+        return -1
     elif (word == "lesser"):
-        return True
+        return -1
     elif (word == "reduce"):
-        return True
+        return -1
     elif (word == "reduced"):
-        return True
-    return False
+        return -1
+    return 0
 
 def upCheck(word):
     if (word == "up"):
-        return True
+        return 1
     elif (word == "raise"):
-        return True
+        return 1
     elif (word == "plus"):
-        return True
+        return 1
     elif (word == "more"):
-        return True
+        return 1
     elif (word == "incline"):
-        return True
+        return 1
     elif (word == "upgrade"):
-        return True
+        return 1
     elif (word == "increase"):
-        return True
+        return 1
     elif (word == "high"):
-        return True
-    return False
+        return 1
+    return 0
 
 def featureCheck(word):
     if (word == "brighter" or word == "brightness"):
@@ -268,7 +359,7 @@ def featureCheck(word):
         return Features.Tones
     elif (word == "light"):
         return Features.Light
-    return null
+    return None
 
 def negativeCheck(word):
     if (word == "don't"):
@@ -296,7 +387,7 @@ def colorCheck(word):
         return Color(255, 255, 255)
     elif (word == "black"):
         return Color(0, 0, 0)
-    return null
+    return None
 
 def randomCheck(word):
     if (word == "random"):

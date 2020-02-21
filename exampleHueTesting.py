@@ -11,4 +11,4 @@ b.get_api()
 # Prints if light 1 is on or not
 print(b.get_light(2, 'on'))
 
-b.set_light(2, 'bri', 127)
+b.set_light(2, 'on', True)
