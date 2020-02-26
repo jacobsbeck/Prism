@@ -146,14 +146,15 @@ def word_classify_check(translated_audio):
 
 def setContrast():
     for i in range(LED_COUNT):
-        cur_HLS = colorsys.rgb_to_hls(strip.getPixelColor(i).r, strip.getPixelColor(i).g, strip.getPixelColor(i).b)
-        cur_RGB = colorsys.hsv_to_rgb((360 - cur_HLS.index(0) * 360) / 360, cur_HLS.index(1), cur_HLS.index(2))
-        strip.setPixelColor(i, Color(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+        cur_RGB = rgbint_to_rgb(strip.getPixelColor(i))
+        cur_HLS = colorsys.rgb_to_hls(cur_RGB[0], cur_RGB[1], cur_RGB[2])
+        cur_RGB = colorsys.hsv_to_rgb((360 - cur_HLS[0] * 360) / 360, cur_HLS[1], cur_HLS[2])
+        strip.setPixelColor(i, Color(cur_RGB[1] * 255, cur_RGB[0] * 255, cur_RGB[2] * 255))
     for l in hue_lights:
         rgb_value = rgbxy.xy_to_rgb(l.xy)
-        cur_HSV = colorsys.rgb_to_hsv(rgb_value.index(0), rgb_value.index(1), rgb_value.index(2))
-        new_rgb_value = colorsys.hsv_to_rgb((360 - cur_HSV.index(0) * 360) / 360, cur_HLS.index(1), cur_HLS.index(2))
-        l.xy = rgbxy.rgb_to_xy(new_rgb_value.index(0), new_rgb_value.index(1), new_rgb_value.index(2))
+        cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
+        new_rgb_value = colorsys.hsv_to_rgb((360 - cur_HSV[0] * 360) / 360, cur_HLS[1], cur_HLS[2])
+        l.xy = rgbxy.rgb_to_xy(new_rgb_value[0], new_rgb_value[1], new_rgb_value[2])
 
 def manipulateBrightness(rand_check, change):
     manipulation_value = 100
@@ -208,7 +209,7 @@ def manipulateDimness(rand_check, change):
             if (l.brightness >= 254 - manipulation_value):
                 l.brightness = 0
             else:
-                l.brightness = l.brightness + 40
+                l.brightness = l.brightness + manipulation_value
         if (rand_check == True):
             l.brightness = random.randrange(0, 254)
 
@@ -217,50 +218,52 @@ def manipulateSaturation(rand_check, change):
         cur_RGB = rgbint_to_rgb(strip.getPixelColor(i))
         cur_HSV = colorsys.rgb_to_hsv(cur_RGB[0], cur_RGB[1], cur_RGB[2])
         if rand_check:
-            cur_RGB = colorsys.hsv_to_rgb(cur_HSV.index(0), random.randrange(0, 100) / 100, cur_HSV.index(2))
+            cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], random.randrange(0, 100) / 100, cur_HSV[2])
         elif change >= 0:
-            cur_RGB = colorsys.hsv_to_rgb(cur_HSV.index(0), random.randrange(cur_HSV.index(1) * 100, 100) / 100, cur_HSV.index(2))
+            cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], random.randrange(cur_HSV[1] * 100, 100) / 100, cur_HSV[2])
         else:
-            cur_RGB = colorsys.hsv_to_rgb(cur_HSV.index(0), random.randrange(0, cur_HSV.index(1) * 100) / 100, cur_HSV.index(2))
-        strip.setPixelColor(i, Color(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+            cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], random.randrange(0, cur_HSV[1] * 100) / 100, cur_HSV[2])
+        strip.setPixelColor(i, Color(cur_RGB[1] * 255, cur_RGB[0] * 255, cur_RGB[2] * 255))
     for l in hue_lights:
         rgb_value = rgbxy.xy_to_rgb(l.xy)
-        cur_HSV = colorsys.rgb_to_hsv(rgb_value.index(0),rgb_value.index(1), rgb_value.index(2))
+        cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
         if rand_check:
-            cur_RGB = colorsys.hsv_to_rgb(cur_HSV.index(0), random.randrange(0, 100) / 100, cur_HSV.index(2))
+            cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], random.randrange(0, 100) / 100, cur_HSV[2])
         elif change >= 0:
-            cur_RGB = colorsys.hsv_to_rgb(cur_HSV.index(0), random.randrange(cur_HSV.index(1) * 100, 100) / 100, cur_HSV.index(2))
+            cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], random.randrange(cur_HSV[1] * 100, 100) / 100, cur_HSV[2])
         else:
-            cur_RGB = colorsys.hsv_to_rgb(cur_HSV.index(0), random.randrange(0, cur_HSV.index(1) * 100) / 100, cur_HSV.index(2))
-        l.xy = rgbxy.rgb_to_xy(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255)
+            cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], random.randrange(0, cur_HSV[1] * 100) / 100, cur_HSV[2])
+        l.xy = rgbxy.rgb_to_xy(cur_RGB[0] * 255, cur_RGB[1] * 255, cur_RGB[2] * 255)
         
 def manipulateHue(rand_check, change):
     for i in range(LED_COUNT):
-        cur_HSV = colorsys.rgb_to_hsv(strip.getPixelColor(i).r, strip.getPixelColor(i).g, strip.getPixelColor(i).b)
+        cur_RGB = rgbint_to_rgb(strip.getPixelColor(i))
+        cur_HSV = colorsys.rgb_to_hsv(cur_RGB[0], cur_RGB[1], cur_RGB[2])
         if rand_check:
-            cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 360) / 360, cur_HSV.index(1), cur_HSV.index(2))
+            cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 360) / 360, cur_HSV[1], cur_HSV[2])
         elif change >= 0:
-            cur_RGB = colorsys.hsv_to_rgb(random.randrange(cur_HSV.index(0) * 360, 360) / 360, cur_HSV.index(1), cur_HSV.index(2))
+            cur_RGB = colorsys.hsv_to_rgb(random.randrange(cur_HSV[0] * 360, 360) / 360, cur_HSV[1], cur_HSV[2])
         else:
-            cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, cur_HSV.index(0) * 360) / 360, cur_HSV.index(1), cur_HSV.index(2))
-        strip.setPixelColor(i, Color(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255))
+            cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, cur_HSV[0] * 360) / 360, cur_HSV[1], cur_HSV[2])
+        strip.setPixelColor(i, Color(cur_RGB[1] * 255, cur_RGB[0] * 255, cur_RGB[2] * 255))
     for l in hue_lights:
         rgb_value = rgbxy.xy_to_rgb(l.xy)
-        cur_HSV = colorsys.rgb_to_hsv(rgb_value.index(0), rgb_value.index(1), rgb_value.index(2))
+        cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
         if rand_check:
-            cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 360) / 360, cur_HSV.index(1), cur_HSV.index(2))
+            cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 360) / 360, cur_HSV[1], cur_HSV[2])
         elif change >= 0:
-            cur_RGB = colorsys.hsv_to_rgb(random.randrange(cur_HSV.index(0) * 360, 360) / 360, cur_HSV.index(1), cur_HSV.index(2))
+            cur_RGB = colorsys.hsv_to_rgb(random.randrange(cur_HSV[0] * 360, 360) / 360, cur_HSV[1], cur_HSV.index(2))
         else:
-            cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, cur_HSV.index(0) * 360) / 360, cur_HSV.index(1), cur_HSV.index(2))
-        l.xy = rgbxy.rgb_to_xy(cur_RGB.index(0) * 255, cur_RGB.index(1) * 255, cur_RGB.index(2) * 255)
+            cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, cur_HSV[0] * 360) / 360, cur_HSV[1], cur_HSV[2])
+        l.xy = rgbxy.rgb_to_xy(cur_RGB[0] * 255, cur_RGB[1] * 255, cur_RGB[2] * 255)
         
 def applyTint():
     for i in range(LED_COUNT):
-        strip.setPixelColor(i, Color((255 - strip.getPixelColor(i).red) / 2, (255 - strip.getPixelColor(i).green) / 2, (255 - strip.getPixelColor(i).blue) / 2))
+        cur_RGB = rgbint_to_rgb(strip.getPixelColor(i))
+        strip.setPixelColor(i, Color(int((255 - cur_RGB[1]) / 2), int((255 - cur_RGB[0]) / 2), int((255 - cur_RGB[2]) / 2)))
     for l in hue_lights:
         cur_RGB = rgbxy.xy_to_rgb(l.xy)
-        l.xy = rgbxy.rgb_to_xy((255 - cur_RGB.red) / 2, (255 - cur_RGB.green) / 2, (255 - cur_RGB.blue) / 2)
+        l.xy = rgbxy.rgb_to_xy(int((255 - cur_RGB[0]) / 2), int((255 - cur_RGB[1]) / 2), int((255 - cur_RGB[2]) / 2))
 
 def applyShade():
     for i in range(LED_COUNT):
@@ -279,8 +282,8 @@ def manipulateTemperature(rand_check, change):
     low_temp = 1700
     high_temp = 6500
     for i in range(LED_COUNT):
-        cur_RGB = strip.getPixelColor(i)
-        cur_XY = rgbxy.rgb_to_xy(cur_RGB.red, cur_RGB.green, cur_RGB.blue)
+        cur_RGB = rgbint_to_rgb(strip.getPixelColor(i))
+        cur_XY = rgbxy.rgb_to_xy(cur_RGB[0], cur_RGB[1], cur_RGB[2])
         cur_CCT = colour.xy_to_CCT(cur_XY, 'hernandez1999')
         if rand_check:
             new_XY = colour.CCT_to_xy(random.randrange(low_temp, high_temp))
@@ -288,8 +291,8 @@ def manipulateTemperature(rand_check, change):
             new_XY = colour.CCT_to_xy(random.randrange(cur_CCT, high_temp))
         else:
             new_XY = colour.CCT_to_xy(random.randrange(low_temp, cur_CCT))
-        new_RGB = rgbxy.xy_to_rgb(new_XY.index(0), new_XY.index(1))
-        strip.setPixelColor(i, Color(new_RGB.index(0), new_RGB.index(1), new_RGB.index(2)))
+        new_RGB = rgbxy.xy_to_rgb(new_XY[0], new_XY[1])
+        strip.setPixelColor(i, Color(new_RGB[1], new_RGB[0], new_RGB[2]))
     for l in hue_lights:
         cur_CCT = colour.xy_to_CCT(l.xy)
         if rand_check:
@@ -363,6 +366,8 @@ def downCheck(word):
         return -1
     elif (word == "reduced"):
         return -1
+    elif (word == "cold"):
+        return -1
     return 0
 
 def upCheck(word):
@@ -381,6 +386,8 @@ def upCheck(word):
     elif (word == "increase"):
         return 1
     elif (word == "high"):
+        return 1
+    elif (word == "warm"):
         return 1
     return 0
 
