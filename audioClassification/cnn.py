@@ -28,6 +28,14 @@ import os.path as op
 from sklearn.model_selection import train_test_split
 
 from neopixel import *
+from phue import Bridge
+
+BRIDGE_IP = '10.0.0.149'
+#BRIDGE_IP = '172.20.10.5'
+USERS_ID = 'vS4w2KQu1fNDEwj-mpp2r8dujuJgr-dASUiGVb9t'
+b = Bridge(BRIDGE_IP, USERS_ID)
+b.connect()
+hue_lights = b.lights
 
 # LED strip configuration:
 LED_COUNT      = 300      # Number of LED pixels.
@@ -107,6 +115,9 @@ def real_time_predict(args):
     isLightOn = False
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip.begin()
+    for i in range(LED_COUNT):
+        strip.setPixelColor(i, Color(255, 255, 255))
+    strip.setBrightness(0)
     if op.exists(args.model):
         model = keras.models.load_model(args.model)
         while True:
@@ -120,12 +131,33 @@ def real_time_predict(args):
                 pred = model.predict_classes(features)
                 for p in pred:
                     print(p)
+                    if (p == 3):
+                        if (not isLightOn):
+                            for i in range(LED_COUNT):
+                                strip.setPixelColor(i, Color(255, 255, 255))
+                            strip.setBrightness(0)
+                            isLightOn = True
+                        manipulation_value = 75
+                        bri_value = strip.getBrightness()
+                        if (bri_value < 255 - manipulation_value):
+                            strip.setBrightness(bri_value + manipulation_value)
+                            strip.show()
+                        for l in hue_lights:
+                            bri_value = l.brightness
+                            if (bri_value < 254 - manipulation_value):
+                                l.brightness = bri_value + manipulation_value
                     if (p == 5):
-                        for i in range(strip.numPixels()):
+                        strip.setBrightness(255)
+                        for i in range(LED_COUNT):
                             if (isLightOn):
                                 strip.setPixelColor(i, Color(0, 0, 0))
                             else:
-                                strip.setPixelColor(i, Color(255, 0, 0))
+                                strip.setPixelColor(i, Color(255, 255, 255))
+                        for l in hue_lights:
+                            if (isLightOn):
+                                l.brightness = 0
+                            else:
+                                l.brightness = 254
                         if (isLightOn):
                             isLightOn = False
                         else:
@@ -138,6 +170,9 @@ def real_time_predict(args):
                 for i in range(strip.numPixels()):
                     strip.setPixelColor(i, Color(0, 0, 0))
                 strip.show()
+                for l in hue_lights:
+                    l.xy = [0.33, 0.33]
+                    l.brightness = 0
                 parser.exit(0)
             except Exception as e: parser.exit(type(e).__name__ + ': ' + str(e))
     elif input('Model not found. Train network first? (y/N)') in ['y', 'yes']:

@@ -41,6 +41,7 @@ r = sr.Recognizer()
 rgbxy = Converter()
 
 BRIDGE_IP = '10.0.0.149'
+#BRIDGE_IP = '172.20.10.5'
 USERS_ID = 'vS4w2KQu1fNDEwj-mpp2r8dujuJgr-dASUiGVb9t'
 b = Bridge(BRIDGE_IP, USERS_ID)
 b.connect()
@@ -149,7 +150,7 @@ def setContrast():
         cur_RGB = rgbint_to_rgb(strip.getPixelColor(i))
         cur_HLS = colorsys.rgb_to_hls(cur_RGB[0], cur_RGB[1], cur_RGB[2])
         cur_RGB = colorsys.hsv_to_rgb((360 - cur_HLS[0] * 360) / 360, cur_HLS[1], cur_HLS[2])
-        strip.setPixelColor(i, Color(cur_RGB[1] * 255, cur_RGB[0] * 255, cur_RGB[2] * 255))
+        strip.setPixelColor(i, Color(int(cur_RGB[1] * 255), int(cur_RGB[0] * 255), int(cur_RGB[2] * 255)))
     for l in hue_lights:
         rgb_value = rgbxy.xy_to_rgb(l.xy)
         cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
@@ -247,7 +248,7 @@ def manipulateHue(rand_check, change):
             cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, cur_HSV[0] * 360) / 360, cur_HSV[1], cur_HSV[2])
         strip.setPixelColor(i, Color(cur_RGB[1] * 255, cur_RGB[0] * 255, cur_RGB[2] * 255))
     for l in hue_lights:
-        rgb_value = rgbxy.xy_to_rgb(l.xy)
+        rgb_value = rgbxy.xy_to_rgb(l.xy[0], l.xy[1])
         cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
         if rand_check:
             cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 360) / 360, cur_HSV[1], cur_HSV[2])
@@ -268,7 +269,7 @@ def applyTint():
 def applyShade():
     for i in range(LED_COUNT):
         cur_RGB = rgbint_to_rgb(strip.getPixelColor(i))
-        strip.setPixelColor(i, Color(int(cur_RGB[1] / 2), int(cur_RGB[0] / 2), int(cur_RGB[2] / 2)))
+        strip.setPixelColor(i, Color(int(cur_RGB[0] / 2), int(cur_RGB[1] / 2), int(cur_RGB[2] / 2)))
     for l in hue_lights:
         cur_RGB = rgbxy.xy_to_rgb(l.xy[0], l.xy[1])
         l.xy = rgbxy.rgb_to_xy(cur_RGB[0] / 2, cur_RGB[1] / 2, cur_RGB[2] / 2)
