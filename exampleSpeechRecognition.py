@@ -2,7 +2,7 @@ import speech_recognition as sr
 from neopixel import *
 from enum import Enum
 import random
-import colour
+from colour import Color
 from rgbxy import Converter
 import colorsys
 from phue import Bridge
@@ -26,6 +26,22 @@ class Features(Enum):
     Contrast=16
     Tones=17
     Light=18
+
+COLORS = [Color("#FFFF00"), #one
+        Color("#FFE100"), #two
+        Color("#FFC000"), #three
+        Color("#FF8E00"), #four
+        Color("#FF0000"), #five
+        Color("#FF00CE"), #six
+        Color("#7030A0"), #seven
+        Color("#2532FF"), #eight
+        Color("#0070C0"), #nine
+        Color("#00B0F0"), #ten
+        Color("#00B050"), #eleven
+        Color("#92D050"), #twelve
+        Color("#FFFFFF")] #thirteen
+
+WORD_LIB = []
 
 # LED strip configuration:
 LED_COUNT      = 300      # Number of LED pixels.
@@ -97,15 +113,14 @@ def word_classify_check(translated_audio):
         if (is_negative_sentence == False):
             is_negative_sentence = negativeCheck(cur_word)
         if (change_value == 0):
-            change_value = downCheck(cur_word)
+            change_value = changeCheck(cur_word)
         if (change_value == 0):
-            change_value = upCheck(cur_word)
+            change_value = changeCheck(cur_word)
         if (col == None):
             col = colorCheck(cur_word)
         if (feat == None):
             feat = featureCheck(cur_word)
-    print(feat)
-    print(change_value)
+            
     if (is_negative_sentence == False):
         if (feat == Features.Brighter):
             manipulateBrightness(randomize, change_value)
@@ -142,7 +157,6 @@ def word_classify_check(translated_audio):
                 strip.setPixelColor(i, Color(col[1], col[0], col[2]))
             for l in hue_lights:
                 l.xy = rgbxy.rgb_to_xy(col[0], col[1], col[2])
-                
     strip.show()
 
 def setContrast():
@@ -338,7 +352,25 @@ def tertiaryPattern():
             strip.setPixelColor(i, Color(255, 174, 66))        
 
 
-def downCheck(word):
+def changeCheck(word):
+    if (word == "up"):
+        return 1
+    elif (word == "raise"):
+        return 1
+    elif (word == "plus"):
+        return 1
+    elif (word == "more"):
+        return 1
+    elif (word == "incline"):
+        return 1
+    elif (word == "upgrade"):
+        return 1
+    elif (word == "increase"):
+        return 1
+    elif (word == "high"):
+        return 1
+    elif (word == "warm"):
+        return 1
     if (word == "down"):
         return -1
     elif (word == "lower"):
@@ -369,27 +401,6 @@ def downCheck(word):
         return -1
     elif (word == "cold"):
         return -1
-    return 0
-
-def upCheck(word):
-    if (word == "up"):
-        return 1
-    elif (word == "raise"):
-        return 1
-    elif (word == "plus"):
-        return 1
-    elif (word == "more"):
-        return 1
-    elif (word == "incline"):
-        return 1
-    elif (word == "upgrade"):
-        return 1
-    elif (word == "increase"):
-        return 1
-    elif (word == "high"):
-        return 1
-    elif (word == "warm"):
-        return 1
     return 0
 
 def featureCheck(word):
@@ -472,4 +483,54 @@ def randomCheck(word):
 def rgbint_to_rgb(rgbint):
     return (rgbint // 256 // 256 % 256, rgbint // 256 % 256, rgbint % 256)
 
+def readFile(filename):
+    filedata = open(filename, "r")
+    lines = filedata.readlines()
+    word_dict = { "jacob": [11] }
+    for line in lines:
+        d = line.strip().split(" ")
+        if d[0] in word_dict:
+            cur_key_values = word_dict[d[0]]
+            cur_key_values.append(d[1])
+            word_dict[d[0]] = cur_key_values
+        else:
+            word_dict[d[0]] = [d[1]]
+    
+    for key in word_dict.keys():
+        temp = CodedWord(key, word_dict[key])
+        WORD_LIB.append(temp)
+    
+    for word in WORD_LIB:
+        print(word)
+
+class CodedWord(object):
+word = ""
+color_array = []
+color = None
+
+def __init__(self, word, color):
+    self.word = word.lower()
+    self.color_array = color
+
+    number_colors = 13
+    index_check = []
+    for i in range(number_colors):
+        index_check.append(False)
+    for color_index in self.color_array:
+        index_check[int(color_index) - 1] = True
+    tempColor = None
+    for j in range(len(index_check)):
+        if index_check[j]:
+            if tempColor is None:
+                tempColor = COLORS[j]
+            else:
+                tempRed = round((tempColor.red + COLORS[j].red) / 2.0, 3)
+                tempGreen = round((tempColor.green + COLORS[j].green) / 2.0, 3)
+                tempBlue = round((tempColor.blue + COLORS[j].blue) / 2.0, 3)
+                tempColor = Color(rgb=(tempRed, tempGreen, tempBlue))
+    self.color = tempColor
+
+def __str__(self):
+    return " {} rgb({}, {}, {}) : {}".format(self.word, round(self.color.red * 255, 3), round(self.color.green * 255, 3), round(self.color.blue * 255, 3), self.color_array)
+    
 main()

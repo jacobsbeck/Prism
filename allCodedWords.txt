@@ -1,0 +1,36 @@
+0 1-Agitation, Arousal, Caring, Ecstasy, Enthrallment, Ferocity, Fondness, Irritation, Liking, Love, Woe
+0 2-Astonishment, Contentment, Enthusiam, Hope, Pleasure, Relief, Satisfaction, Surprise, Triumph
+0 3-Amazement, Delight, Eagerness, Elation, Enjoyment, Euphoria, Happiness, Joy, Jubilation, Optimism, Thrill 
+0 4-Amusement, Bliss, Cheerfulness, Excitement, Exhilaration, Gladness, Glee, Jolliness
+1 1-Amazement, Amusement, Astonishment, Bliss, Eagerness, Enthrallement, Excitement, Exhilaration, Surprise, Thrill, Triumph, Worry
+2 1-Attraction, Ecstasy, Enthrallement, Caring, Cheerfulness, Compassion, Contentment, Delight, Gladness, Happiness, Hope, Liking, Optimism, Pride, Sentimentality, Sympathy
+3 1-Adoration, Affection, Aggravation, Alarm, Alienation, Anxiety, Apprehension, Bitterness, Caring, Dejection, Desire, Despair, Dislike, Dismay, Distress, Eagerness, Embarrassment, Enthusiasm, Exasperation, Fear, Fondness, Fright, Frustration, Fury, Glumness, Grouchiness, Hate, Humiliation, Hurt, Hysteria, Infatuation, Insult, Irritation, Jealousy, Liking, Loathing, Mortification, Neglect, Nervousness, Panic, Passion, Pity, Pride, Rage, Remorse, Resentment, Terror, Uneasiness, Wrath
+3 2-Agitation, Anger, Annoyance, Contempt, Disappointment, Displeasure, Dread, Envy, Gloom, Grumpiness, Hostility, Insecurity, Longing, Lust, Scorn, Shame, Spite, Tenseness, Worry
+4 1-Agony, Amazement, Anxiety, Apprehension, Astonishment, Caring, Compassion, Contempt, Contentment, Defeat, Despair, Disappointment, Dismay, Dread, Ecstasy, Enthrallment, Enthusiasm, Envy, Euphoria, Fear, Fright, Gloom, Glumness, Grief, Grouchiness, Happiness, Hurt, Insecurity, Liking, Optimism, Panic, Pleasure, Relief, Shame, Shock, Suffering, Sympathy, Tenderness, Tenseness, Terror, Triumph, Worry
+4 2-Adoration, Affection, Agitation, Alarm, Arousal, Attraction, Bitterness, Desire, Dislike, Envy, Fondness, Frustration, Grumpiness, Hope, Horror, Hysteria, Infatuation, Irritation, Jealousy, Longing, Love, Lust, Misery, Neglect, Pity, Remorse, Sentimentality, Torment
+4 3-Aggravation, Anger, Exasperation, Hostility, Insult, Loathing, Mortification, Passion, Pride, Revulsion, Scorn, Vengefulness
+4 4-Annoyance, Disgust, Ferocity, Hate, Outrage, Spite
+4 5-Fury, Rage, Resentment, Wrath
+5 1-Apprehension, Bliss, Contempt, Contentment, Elation, Enthusiasm, Hope, Liking, Longing, Optimism, Pride
+5 2-Caring, Ecstasy, Enthrallment, Euphoria, Love, Lust, Pleasure, Relief, Sentimentality
+5 3-Arousal, Attraction, Compassion, Desire, Fondness, Passion, Sympathy
+5 4-Adoration, Affection, Infatuation, Tenderness
+6 1-Aggravation, Alienation, Anxiety, Apprehension, Bitterness, Depression, Dislike, Displeasure, Distress, Dread, Embarrassment, Envy, Exasperation, Fear, Ferocity, Fright, Frustration, Glumness, Grouchiness, Grumpiness, Guilty, Horror, Hostility, Insecurity, Insult, Isolation, Melancholy, Loathing, Panic, Regret, Rejection, Revulsion, Sadness, Shock, Sorrow, Terror, Uneasiness, Unhappiness
+6 2-Humiliation, Jealousy, Nervousness, Tenseness, Vengefulness
+7 1-Aggravation, Anger, Anxiety, Apprehension, Contempt, Dejection, Disappointment, Distress, Dread, Envy, Fright, Fury, Grumpiness, Hate, Hysteria, Insult, Jealousy, Longing, Panic, Pity, Remorse, Resentment, Revulsion, Scorn, Shock, Spite, Tenseness, Worry, Wrath
+7 2-Bitterness, Defeat, Dislike, Dismay, Embarrassment, Exasperation, Frustration, Glumness, Grouchiness, Humiliation, Insecurity, Loathing, Nervousness, Shame, Torment, Uneasiness, Vengefulness
+7 3-Despair, Displeasure, Grief, Hurt, Isolation, Neglect, Rejection, Suffering, Woe
+7 4-Alienation, Gloom, Misery, Regret
+7 5-Agony, Guilty, Homesickness, Hopelessness, Loneliness, Melancholy, Sadness, Sorrow, Unhappiness
+7 6-Anguish, Depression
+8 1-Agitation, Alarm, Anger, Annoyance, Contempt, Dejection, Despair, Dislike, Fear, Frustration, Hate, Hopelessness, Humiliation, Insult, Irritation, Isolation, Jealousy, Loneliness, Mortification, Neglect, Outrage, Panic, Pity, Rage, Regret, Rejection, Scorn, Shame, Woe
+8 2-Defeat, Disgust, Dismay, Distress, Embarrassment, Fright, Grief, Horror, Hurt, Hysteria, Remorse, Revulsion, Terror
+8 3-Disappointment
+9 1-Aggravation, Alarm, Anxiety, Bitterness, Compassion, Defeat, Desire, Dismay, Displeasure, Distress, Fright, Guilty, Homesickness, Horror, Hostility, Hysteria, Insecurity, Longing, Lust, Melancholy, Panic, Pity, Remorse, Sadness, Sympathy, Tenderness, Tenseness, Terror, Unhappiness, Woe, Worry
+9 2-Apprehension, Dejection, Dread, Fear, Glumness, Grouchiness, Nervousness, Sentimentality, Suffering, Torment, Uneasiness
+10 1-Amazement, Attraction, Bliss, Delight, Ecstasy, Elation, Embarrassment, Enthrallment, Enthusiasm, Exhilaration, Glee, Humiliation, Isolation, Jolliness, Liking, Mortification, Pleasure, Regret, Rejection, Relief, Shame, Surprise, Thrill, Uneasiness
+10 2-Amusement, Astonishment, Eagerness, Enjoyment, Excitement, Joy, Jubilation, Satisfaction
+10 3-Triumph
+11 1-Amazement, Amusement, Astonishment, Bliss, Cheerfulness, Delight, Eagerness, Ecstasy, Elation, Enjoyment, Enthrallment, Euphoria, Excitement, Exhilaration, Gladness, Glee, Happiness, Jolliness, Joy, Jubilation, Liking, Love, Pleasure, Satisfaction, Surprise, Thrill, Triumph, Woe
+12 1-Amazement, Arousal, Astonishment, Enthrallment, Exhilaration, Pity, Pride
+12 2-Shock, Surprise
