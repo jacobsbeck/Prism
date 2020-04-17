@@ -14,11 +14,9 @@ COLORS = [Color("#FFFF00"), #one
         Color("#92D050"), #twelve
         Color("#FFFFFF")] #thirteen
 
-<<<<<<< HEAD
+
+
 class WordLibrary:
-=======
-class CodedLibrary:
->>>>>>> refs/remotes/origin/master
 
     # A Coded Library takes a filename and creates a list of word 
     # objects read in from the given file.
@@ -146,10 +144,7 @@ class CodedColor(object):
         return "rgb({}, {}, {}) : {}".format(round(self.color.red * 255, 3), round(self.color.green * 255, 3), round(self.color.blue * 255, 3), self.colorName)
 
 class ColorLibrary:
-<<<<<<< HEAD
-=======
     colorLib = []
->>>>>>> refs/remotes/origin/master
 
     # A Color Library takes a filename and creates a list of color 
     # objects read in from the given file.
