@@ -3,17 +3,17 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
-* [Sound Classification](#sound-classification)
 * [Speech Recognition](#speech-recognition)
 
 ## General info
-Hello! This is the project Prism, created for the Interactive Media Design 2020 Capstone at the University of Washington Bothell. This project uses a Raspberry Pi 4 and a Blue Snowball microphone to manipulate lights. This project utilizes audio classification, noise cancellation, and machine learning to create a unique audio to light expereince. The audio calssification model I used for this project is based off of [this](https://github.com/mtobeiyf/audio-classification) project I found during my research.
+Hello! This is the project Prism, created for the Interactive Media Design 2020 Capstone at the University of Washington Bothell. This project uses a Raspberry Pi 4 and a Blue Snowball microphone to manipulate lights. This project utilizes speech recognition to create a light expereince using LED lights. This project also has the capability to use hue lights as well as a smart mirror display.
 	
 ## Technologies
 Hardware:
 * Raspberry Pi 4
 * LED Strip
 * Hue Bridge and Lights (optional)
+* Smart Mirror Display (optional)
 
 Software:
 * Python 3.6
@@ -61,19 +61,19 @@ $ pip install rgbxy
 $ pip install colour
 ```
 
-## Speech Recognition
-To run the latest version of the program, run the following code:
+## Run Project
+The system is broken up into four different controllers, main, speech, light, and file. The MainController is the base example of the system and stores the other controllers. To run the latest version of the program, run the line of code below. Also, all the arguments listed below can be added to the base command line:
+* -ip: IP Address of your hue bridge, string
+* -id: Unique username to access hue bridge, string
+* -wf: Filename of coded words you want to use, string
+* -cf: Filename of color names you want to use, string
+* -l: Number of LEDs used in system, int
+* -d: If you are using a display, boolean
+* -sr: The speech library you are using, string
 ```
 $ sudo bash ./mainStart.sh
 ```
-Some different variables that can be passed into the execution command line:
-* -ip: IP Address of your hue bridge
-* -id: Unique username to access hue bridge
-* -wf: Filename of coded words you want to use
-* -cf: Filename of color names you want to use
-* -l: Number of LEDs used in system
-* -d: If you are using a display
-* -sr: The speech library you are using
+
 
 To run the pervious version of the program, run the following code:
 ```
