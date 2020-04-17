@@ -12,26 +12,25 @@ class Recognizers(Enum):
 class Features(Enum):
     Brighter=1
     Dimmer=2
-    Color=3
-    Off=4
-    On=5
-    Hue=6
-    Tint=7
-    Saturation=8
-    Shade=9
-    Monochromatic=10
-    Primary=11
-    Secondary=12
-    Tertiary=13
-    Temperature=14
-    Chroma=15
-    Contrast=16
-    Tones=17
-    Light=18
+    Off=3
+    On=4
+    Hue=5
+    Tint=6
+    Saturation=7
+    Shade=8
+    Primary=9
+    Secondary=10
+    Tertiary=11
+    Temperature=12
+    Contrast=13
+    Tones=14
 
 class SpeechControl:
-    # A speech control takes a minimum of a light control object and coded libary of words. By default this class uses the google recognizer and your default microphone. 
-    def __init__(self, light_control, codedWords, threshold=300, dynamic_threshold=False, recognizer_name="google", mic_name=None):
+
+    # A speech control takes a minimum of a light control object, coded libary of words, a 
+    # library of colors, and the name of your installed recognizer. By default this 
+    # class uses the google recognizer and your default microphone. 
+    def __init__(self, light_control, codedWords, codedColors, recognizer_name, threshold=300, dynamic_threshold=False, mic_name=None):
         self.recognizer = sr.Recognizer()
         self.recognizer.energy_threshold = threshold
         self.recognizer.dynamic_energy_threshold = dynamic_threshold
@@ -53,6 +52,7 @@ class SpeechControl:
 
         self.lights = light_control
         self.codedLibrary = codedWords
+        self.colorLibrary = codedColors
     
     def __str__(self):
         return "Microphone: {}\nSpeech Library: {}\nEnergy Threshold: {}\nDynamic Threshold: {}\n Word Library Length: {}\n{}\n".format(self.mic.microphone_name, self.recognizer_name, self.recognizer.threshold, self.recognizer.dynamic_threshold, len(self.codedLibrary), self.lights)
@@ -83,8 +83,11 @@ class SpeechControl:
             except sr.RequestError as e: 
                 print("Could not request results from Google Speech Recognition service; {0}".format(e))
     
+    # This method takes a string version of the audio detected from the speech recognition 
+    # package, and then calls the appropriate methods from the light control based on the audio transcript.
     def word_classify_check(self, translated_audio):
         word_array = translated_audio.split()
+        # word check holder
         col = None
         coded_col = None
         mixed_col = []
@@ -92,6 +95,10 @@ class SpeechControl:
         change_value = 0
         randomize = False
         feat = None
+
+
+        col = self.colorCheck(translated_audio.lower())
+
         for j in range(len(word_array)):
             cur_word = word_array[j].lower()
             if (randomize == False):
@@ -100,8 +107,6 @@ class SpeechControl:
                 is_negative_sentence = self.negativeCheck(cur_word)
             if (change_value == 0):
                 change_value = self.changeCheck(cur_word)
-            if (col == None):
-                col = self.colorCheck(cur_word)
             if (feat == None):
                 feat = self.featureCheck(cur_word)
             if (coded_col == None):
@@ -145,6 +150,8 @@ class SpeechControl:
 
         self.lights.strip.show()
 
+    # This method takes a word and determines if its considered a "random" key word,
+    # if so return true otherwise return false.
     def randomCheck(self, word):
         if (word == "random"):
             return True
@@ -155,6 +162,8 @@ class SpeechControl:
         elif (word == "unexpected"):
             return True
     
+    # This method takes a word and determines if its considered a "negative" key word,
+    # if so return true otherwise return false.
     def negativeCheck(self, word):
         if (word == "don't"):
             return True
@@ -164,6 +173,9 @@ class SpeechControl:
             return True
         return False
     
+    # This method takes a word and determines if its considered a "change value" key word. 
+    # If consider a "postive change value" return 1, if considered a "negative change value" 
+    # return -1, and if neither return 0
     def changeCheck(self, word):
         if (word == "up"):
             return 1
@@ -215,32 +227,13 @@ class SpeechControl:
             return -1
         return 0
     
-    def colorCheck(self, word):
-        if (word == "red"):
-            return [255, 0, 0]
-        elif (word == "green"):
-            return [0, 255, 0]
-        elif (word == "blue"):
-            return [0, 0, 255]
-        elif (word == "yellow"):
-            return [255, 255, 0]
-        elif (word == "orange"):
-            return [128, 255, 0]
-        elif (word == "purple"):
-            return [0, 128, 128]
-        elif (word == "white"):
-            return [255, 255, 255]
-        elif (word == "black"):
-            return [0, 0, 0]
-        return None
-    
+    # This method takes a word and determines if its considered a "feature" key word,
+    # if so return the proper Enum value.
     def featureCheck(self, word):
         if (word == "brighter" or word == "brightness" or word == "bright"):
             return Features.Brighter
         elif (word == "dimmer" or word == "dimness" or word == "dim"):
             return Features.Dimmer
-        elif (word == "color"):
-            return Features.Color
         elif (word == "off"):
             return Features.Off
         elif (word == "on"):
@@ -253,8 +246,6 @@ class SpeechControl:
             return Features.Saturation
         elif (word == "shade"):
             return Features.Shade
-        elif (word == "monochromatic"):
-            return Features.Monochromatic
         elif (word == "primary"):
             return Features.Primary
         elif (word == "secondary"):
@@ -263,20 +254,26 @@ class SpeechControl:
             return Features.Tertiary
         elif (word == "temperature"):
             return Features.Temperature
-        elif (word == "chroma"):
-            return Features.Chroma
         elif (word == "contrast" or word == "contrasting"):
             return Features.Contrast
-        elif (word == "tones"):
+        elif (word == "tones" or word == "tone"):
             return Features.Tones
-        elif (word == "light"):
-            return Features.Light
         return None
     
+    # This method takes a word and determines if its within the coded library,
+    # if so the rgb values, otherwise return none.
     def codedWordCheck(self, cur_word):
         for word in self.codedLibrary:
             if word.word == cur_word:
                 return word.color
+        return None
+    
+    # This method takes a word and determines if its considered a color,
+    # if so the rgb values, otherwise return none.
+    def colorCheck(self, s):
+        for color in self.colorLibrary:
+            if (color.colorName in s):
+                return color.colorRGB
         return None
 
         
