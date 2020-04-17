@@ -3,31 +3,21 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
-* [Sound Classification](#sound-classification)
 * [Speech Recognition](#speech-recognition)
 
 ## General info
-Hello! This is the project Prism, created for the Interactive Media Design 2020 Capstone at the University of Washington Bothell. This project uses a Raspberry Pi 4 and a Blue Snowball microphone to manipulate lights. This project utilizes audio classification, noise cancellation, and machine learning to create a unique audio to light expereince. The audio calssification model I used for this project is based off of [this](https://github.com/mtobeiyf/audio-classification) project I found during my research.
+Hello! This is the project Prism, created for the Interactive Media Design 2020 Capstone at the University of Washington Bothell. This project uses a Raspberry Pi 4 and a Blue Snowball microphone to manipulate lights. This project utilizes speech recognition to create a light expereince using LED lights. This project also has the capability to use hue lights as well as a smart mirror display.
 	
 ## Technologies
 Hardware:
 * Raspberry Pi 4
-* Wifi Extendor
 * LED Strip
-* Hue Bridge and Lights
-* Personal Hotspot
+* Hue Bridge and Lights (optional)
+* Smart Mirror Display (optional)
 
 Software:
 * Python 3.6
 * scipy
-* librosa
-* tensorflow
-* pysoundfile
-* sounddevice
-* matplotlib
-* scikit-learn
-* tensorflow
-* keras
 * pyaudio
 * wave
 * keyboard
@@ -43,18 +33,10 @@ Software:
 To run this project, install the appropriate packages:
 ```
 $ pip install scipy==1.2.3
-$ pip install librosa==0.6.0
-$ pip install matplotlib
 $ pip install pyaudio
 $ pip install wave
 $ pip install keyboard
-$ pip install tensorflow
-$ pip install pysoundfile
-$ pip install sounddevice
-$ pip install keras
-$ pip install numpy
 $ pip install rpi-ws281x
-$ pip install scikit-learn
 $ pip install speechrecognition
 $ pip install google-cloud-speech
 $ pip install phue
@@ -63,23 +45,22 @@ $ pip install rgbxy
 $ pip install colour
 ```
 
-To setup the hardware, you must begin by configuring your personal hotspot and wifi extendor. Once your personal network is working with your extendor, connect your hue bridge with ethernet to your wifi extendor and then connect your raspberry pi with wifi to your extendor. From there you must determine the bridges ip address and change the ip address of the bridge in the code. Then run the code below and see if the lights start to flash:
+## Run Project
+The system is broken up into four different controllers, main, speech, light, and file. The MainController is the base example of the system and stores the other controllers. To run the latest version of the program, run the line of code below. Also, all the arguments listed below can be added to the base command line:
+* -ip: IP Address of your hue bridge, string
+* -id: Unique username to access hue bridge, string
+* -wf: Filename of coded words you want to use, string
+* -cf: Filename of color names you want to use, string
+* -l: Number of LEDs used in system, int
+* -d: If you are using a display, boolean
+* -sr: The speech library you are using, string
 ```
-$ python exampleHueTesting.py
-```
-
-## Sound Classification
-Before you can start classifying a live microphone, we need to train it:
-```
-$ sudo ./train.sh
-```
-* After we train the classifier, you can run the program:
-```
-$ sudo ./start.sh
+$ sudo bash ./mainStart.sh
 ```
 
-## Speech Recognition
+
+To run the pervious version of the program, run the following code:
 ```
-$ sudo ./speechStart.sh
+$ sudo bash ./speechStart.sh
 ```
 
