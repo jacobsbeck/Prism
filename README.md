@@ -18,14 +18,6 @@ Hardware:
 Software:
 * Python 3.6
 * scipy
-* librosa
-* tensorflow
-* pysoundfile
-* sounddevice
-* matplotlib
-* scikit-learn
-* tensorflow
-* keras
 * pyaudio
 * wave
 * keyboard
