@@ -12,10 +12,8 @@ Hello! This is the project Prism, created for the Interactive Media Design 2020 
 ## Technologies
 Hardware:
 * Raspberry Pi 4
-* Wifi Extendor
 * LED Strip
-* Hue Bridge and Lights
-* Personal Hotspot
+* Hue Bridge and Lights (optional)
 
 Software:
 * Python 3.6
@@ -63,23 +61,22 @@ $ pip install rgbxy
 $ pip install colour
 ```
 
-To setup the hardware, you must begin by configuring your personal hotspot and wifi extendor. Once your personal network is working with your extendor, connect your hue bridge with ethernet to your wifi extendor and then connect your raspberry pi with wifi to your extendor. From there you must determine the bridges ip address and change the ip address of the bridge in the code. Then run the code below and see if the lights start to flash:
-```
-$ python exampleHueTesting.py
-```
-
-## Sound Classification
-Before you can start classifying a live microphone, we need to train it:
-```
-$ sudo ./train.sh
-```
-* After we train the classifier, you can run the program:
-```
-$ sudo ./start.sh
-```
-
 ## Speech Recognition
+To run the latest version of the program, run the following code:
 ```
-$ sudo ./speechStart.sh
+$ sudo bash ./mainStart.sh
+```
+Some different variables that can be passed into the execution command line:
+* -ip: IP Address of your hue bridge
+* -id: Unique username to access hue bridge
+* -wf: Filename of coded words you want to use
+* -cf: Filename of color names you want to use
+* -l: Number of LEDs used in system
+* -d: If you are using a display
+* -sr: The speech library you are using
+
+To run the pervious version of the program, run the following code:
+```
+$ sudo bash ./speechStart.sh
 ```
 
