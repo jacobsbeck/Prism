@@ -33,18 +33,10 @@ Software:
 To run this project, install the appropriate packages:
 ```
 $ pip install scipy==1.2.3
-$ pip install librosa==0.6.0
-$ pip install matplotlib
 $ pip install pyaudio
 $ pip install wave
 $ pip install keyboard
-$ pip install tensorflow
-$ pip install pysoundfile
-$ pip install sounddevice
-$ pip install keras
-$ pip install numpy
 $ pip install rpi-ws281x
-$ pip install scikit-learn
 $ pip install speechrecognition
 $ pip install google-cloud-speech
 $ pip install phue
