@@ -46,12 +46,18 @@ class SpeechControl:
         elif recognizer_name == "google":
             self.recognizer_name = Recognizers.Google
         
+<<<<<<< HEAD
         if not mic_name == None:
             for i, microphone_name in enumerate(Microphone.list_microphone_names()):
                 if microphone_name == mic_name:
                     self.mic = Microphone(device_index=i)
         else:
             self.mic = Microphone()
+=======
+        for i, microphone_name in enumerate(Microphone.list_microphone_names()):
+            if microphone_name == mic_name:
+                self.mic = Microphone(device_index=i)
+>>>>>>> refs/remotes/origin/master
 
         self.lights = light_control
         self.codedLibrary = codedWords
@@ -65,7 +71,11 @@ class SpeechControl:
         while True:
             try:
                 with self.mic as source:
+<<<<<<< HEAD
                     #self.recognizer.adjust_for_ambient_noise(source)
+=======
+                    self.recognizer.adjust_for_ambient_noise(source)
+>>>>>>> refs/remotes/origin/master
                     audio = self.recognizer.listen(source)
                 if self.recognizer_name == Recognizers.Sphinx:
                     cur_str = self.recognizer.recognize_sphinx(audio)
@@ -77,7 +87,10 @@ class SpeechControl:
                     cur_str = self.recognizer.recognize_google_cloud(audio)
                 elif self.recognizer_name == Recognizers.Google:
                     cur_str = self.recognizer.recognize_google(audio)
+<<<<<<< HEAD
                 print(cur_str)
+=======
+>>>>>>> refs/remotes/origin/master
                 self.word_classify_check(cur_str)
             except KeyboardInterrupt:
                 self.lights.endLights()
@@ -149,7 +162,11 @@ class SpeechControl:
                 self.lights.setColor(col)
             #elif (coded_col != None):
             #    self.lights.setColor(coded_col)
+<<<<<<< HEAD
             elif (len(mixed_col) != 0):
+=======
+            elif (mixed_col.count() != 0):
+>>>>>>> refs/remotes/origin/master
                 self.lights.setColorMix(mixed_col)
 
         self.lights.strip.show()
@@ -267,7 +284,11 @@ class SpeechControl:
     # This method takes a word and determines if its within the coded library,
     # if so the rgb values, otherwise return none.
     def codedWordCheck(self, cur_word):
+<<<<<<< HEAD
         for word in self.codedLibrary.wordLib:
+=======
+        for word in self.codedLibrary:
+>>>>>>> refs/remotes/origin/master
             if word.word == cur_word:
                 return word.color
         return None
@@ -275,7 +296,11 @@ class SpeechControl:
     # This method takes a word and determines if its considered a color,
     # if so the rgb values, otherwise return none.
     def colorCheck(self, s):
+<<<<<<< HEAD
         for color in self.colorLibrary.colorLib:
+=======
+        for color in self.colorLibrary:
+>>>>>>> refs/remotes/origin/master
             if (color.colorName in s):
                 return color.colorRGB
         return None
