@@ -47,6 +47,13 @@ class SpeechControl:
         elif recognizer_name == "google":
             self.recognizer_name = Recognizers.Google
         
+
+        if not mic_name == None:
+            for i, microphone_name in enumerate(Microphone.list_microphone_names()):
+                if microphone_name == mic_name:
+                    self.mic = Microphone(device_index=i)
+        else:
+            self.mic = Microphone()
         for i, microphone_name in enumerate(Microphone.list_microphone_names()):
             if microphone_name == mic_name:
                 self.mic = Microphone(device_index=i)
@@ -63,6 +70,7 @@ class SpeechControl:
         while True:
             try:
                 with self.mic as source:
+                    #self.recognizer.adjust_for_ambient_noise(source)
                     self.recognizer.adjust_for_ambient_noise(source)
                     audio = self.recognizer.listen(source)
                 if self.recognizer_name == Recognizers.Sphinx:
@@ -75,6 +83,7 @@ class SpeechControl:
                     cur_str = self.recognizer.recognize_google_cloud(audio)
                 elif self.recognizer_name == Recognizers.Google:
                     cur_str = self.recognizer.recognize_google(audio)
+                print(cur_str)
                 self.word_classify_check(cur_str)
                 self.display.updateSpeechDetected(cur_str)
             except KeyboardInterrupt:
@@ -147,7 +156,7 @@ class SpeechControl:
                 self.lights.setColor(col)
             #elif (coded_col != None):
             #    self.lights.setColor(coded_col)
-            elif (mixed_col.count() != 0):
+            elif (len(mixed_col) != 0):
                 self.lights.setColorMix(mixed_col)
 
         self.lights.strip.show()
@@ -265,7 +274,7 @@ class SpeechControl:
     # This method takes a word and determines if its within the coded library,
     # if so the rgb values, otherwise return none.
     def codedWordCheck(self, cur_word):
-        for word in self.codedLibrary:
+        for word in self.codedLibrary.wordLib:
             if word.word == cur_word:
                 return word.color
         return None
@@ -273,7 +282,7 @@ class SpeechControl:
     # This method takes a word and determines if its considered a color,
     # if so the rgb values, otherwise return none.
     def colorCheck(self, s):
-        for color in self.colorLibrary:
+        for color in self.colorLibrary.colorLib:
             if (color.colorName in s):
                 return color.colorRGB
         return None

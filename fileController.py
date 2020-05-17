@@ -14,7 +14,9 @@ COLORS = [Color("#FFFF00"), #one
         Color("#92D050"), #twelve
         Color("#FFFFFF")] #thirteen
 
-class CodedLibrary:
+
+
+class WordLibrary:
 
     # A Coded Library takes a filename and creates a list of word 
     # objects read in from the given file.

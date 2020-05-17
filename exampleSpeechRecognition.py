@@ -2,7 +2,11 @@ import speech_recognition as sr
 from neopixel import *
 from enum import Enum
 import random
+<<<<<<< HEAD
+from colour import color
+=======
 from colour import Color
+>>>>>>> refs/remotes/origin/master
 from rgbxy import Converter
 import colorsys
 from phue import Bridge
@@ -67,7 +71,7 @@ strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 
 strip.begin()
 
 for i in range(LED_COUNT):
-    strip.setPixelColor(i, Color(255, 255, 255))
+    strip.setPixelColor(i, Color(1, 1, 1))
 for l in hue_lights:
     l.xy = [0.33, 0.33]
     l.brightness = 255
@@ -504,6 +508,36 @@ def readFile(filename):
         print(word)
 
 class CodedWord(object):
+<<<<<<< HEAD
+    word = ""
+    color_array = []
+    color = None
+
+    def __init__(self, word, color):
+        self.word = word.lower()
+        self.color_array = color
+
+        number_colors = 13
+        index_check = []
+        for i in range(number_colors):
+            index_check.append(False)
+        for color_index in self.color_array:
+            index_check[int(color_index) - 1] = True
+        tempColor = None
+        for j in range(len(index_check)):
+            if index_check[j]:
+                if tempColor is None:
+                    tempColor = COLORS[j]
+                else:
+                    tempRed = round((tempColor.red + COLORS[j].red) / 2.0, 3)
+                    tempGreen = round((tempColor.green + COLORS[j].green) / 2.0, 3)
+                    tempBlue = round((tempColor.blue + COLORS[j].blue) / 2.0, 3)
+                    tempColor = Color(rgb=(tempRed, tempGreen, tempBlue))
+        self.color = tempColor
+
+    def __str__(self):
+        return " {} rgb({}, {}, {}) : {}".format(self.word, round(self.color.red * 255, 3), round(self.color.green * 255, 3), round(self.color.blue * 255, 3), self.color_array)
+=======
 word = ""
 color_array = []
 color = None
@@ -532,5 +566,6 @@ def __init__(self, word, color):
 
 def __str__(self):
     return " {} rgb({}, {}, {}) : {}".format(self.word, round(self.color.red * 255, 3), round(self.color.green * 255, 3), round(self.color.blue * 255, 3), self.color_array)
+>>>>>>> refs/remotes/origin/master
     
 main()
