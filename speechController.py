@@ -105,9 +105,8 @@ class SpeechControl:
         randomize = False
         feat = None
 
-
+        
         col = self.colorCheck(translated_audio.lower())
-
         for j in range(len(word_array)):
             cur_word = word_array[j].lower()
             if (randomize == False):
@@ -122,7 +121,6 @@ class SpeechControl:
                 coded_col = self.codedWordCheck(cur_word)
             if (self.codedWordCheck(cur_word) != None):
                 mixed_col.append(self.codedWordCheck(cur_word))
-                
         if (is_negative_sentence == False):
             if (feat == Features.Brighter):
                 self.lights.manipulateBrightness(randomize, change_value)
@@ -151,7 +149,7 @@ class SpeechControl:
             elif (feat == Features.Tertiary):
                 self.lights.tertiaryPattern()
             elif (col != None):
-                self.lights.setColor(col)
+                self.lights.setColor(col.colorRGB)
             #elif (coded_col != None):
             #    self.lights.setColor(coded_col)
             elif (len(mixed_col) != 0):
@@ -280,9 +278,14 @@ class SpeechControl:
     # This method takes a word and determines if its considered a color,
     # if so the rgb values, otherwise return none.
     def colorCheck(self, s):
+        cur_color = None
         for color in self.colorLibrary.colorLib:
-            if (color.colorName in s):
-                return color.colorRGB
-        return None
+            if color.colorName in s:
+                if cur_color == None:
+                    cur_color = color
+                else:
+                    if (len(color.colorName.split(" ")) > len(cur_color.colorName.split(" "))):
+                        cur_color = color
+        return cur_color
 
         

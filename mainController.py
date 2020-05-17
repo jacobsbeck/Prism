@@ -1,4 +1,5 @@
 import argparse
+import time
 
 from speechController import SpeechControl
 from lightController import LightControl
@@ -19,9 +20,13 @@ def main(args):
     rec = args.recognizer
     
     wordLib = WordLibrary(wordFileName)
-    print(wordLib)
     colorLib = ColorLibrary(colorFileName)
     lights = LightControl(numLEDs, hue_ip, hue_id)
+    #lights.setColor([0,1,0])
+    #lights.strip.show()
+    #time.sleep(2)
+    #lights.manipulateHue(False, 0)
+    #lights.strip.show()
     speech = SpeechControl(lights, wordLib, colorLib, rec)
 
     speech.createContinuousStream()
@@ -32,7 +37,7 @@ if __name__ == '__main__':
     parser.add_argument('-id', '--hueID',          metavar='user_id',     default='vS4w2KQu1fNDEwj-mpp2r8dujuJgr-dASUiGVb9t', help='uses this is you have hue lights and bridge you would like to connect')
     parser.add_argument('-wf', '--wordFile',       metavar='filename',     default='allCodedWords.txt',                       help='use this if you have your own file of data')
     parser.add_argument('-cf', '--colorFile',      metavar='filename',     default='colorFile.txt',                           help='use this if you have your own file of data')
-    parser.add_argument('-l', '--leds',            metavar='size',     default=300,                                           help='the number of LED ligths', type=int)
+    parser.add_argument('-l', '--leds',            metavar='size',     default=64,                                           help='the number of LED ligths', type=int)
     parser.add_argument('-d', '--display',         action='store_true',                                                       help='if you are using a smart mirror display')
     parser.add_argument('-sr', '--recognizer',     metavar='speech_recognition',   default='google',                          help='specify which recognition package you\'re using')
     args = parser.parse_args()
