@@ -168,3 +168,24 @@ class ColorLibrary:
             tempLib.append(newColor)
         return tempLib
     
+class Prompts:
+    prompts = []
+
+    # A Color Library takes a filename and creates a list of color 
+    # objects read in from the given file.
+    def __init__(self, fileName=None):
+        if (not fileName == None):
+            self.prompts = self.readFile(fileName)
+    
+    def __str__(self):
+        tempStr = ""
+        for color in self.prompts:
+            tempStr += str(color) + "\n"
+        return tempStr
+
+    # This method takes a filename and reads the file data in coded color 
+    # objects that are then added to the color libaray.
+    def readFile(self, filename):
+        filedata = open(filename, "r")
+        lines = filedata.readlines()
+        return lines

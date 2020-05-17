@@ -30,10 +30,11 @@ class SpeechControl:
     # A speech control takes a minimum of a light control object, coded libary of words, a 
     # library of colors, and the name of your installed recognizer. By default this 
     # class uses the google recognizer and your default microphone. 
-    def __init__(self, light_control, codedWords, codedColors, recognizer_name, threshold=300, dynamic_threshold=False, mic_name=None):
+    def __init__(self, light_control, codedWords, codedColors, recognizer_name, display=None, threshold=300, dynamic_threshold=False, mic_name=None):
         self.recognizer = sr.Recognizer()
         self.recognizer.energy_threshold = threshold
         self.recognizer.dynamic_energy_threshold = dynamic_threshold
+        self.display = display
 
         if recognizer_name == "sphinx":
             self.recognizer_name = Recognizers.Sphinx
@@ -75,6 +76,7 @@ class SpeechControl:
                 elif self.recognizer_name == Recognizers.Google:
                     cur_str = self.recognizer.recognize_google(audio)
                 self.word_classify_check(cur_str)
+                self.display.updateSpeechDetected(cur_str)
             except KeyboardInterrupt:
                 self.lights.endLights()
                 break  
