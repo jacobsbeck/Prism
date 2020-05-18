@@ -85,7 +85,8 @@ class SpeechControl:
                     cur_str = self.recognizer.recognize_google(audio)
                 print(cur_str)
                 self.word_classify_check(cur_str)
-                self.display.updateSpeechDetected(cur_str)
+                if (self.display != None):
+                    self.display.updateSpeechDetected(cur_str)
             except KeyboardInterrupt:
                 self.lights.endLights()
                 break  
