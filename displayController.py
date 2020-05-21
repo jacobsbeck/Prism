@@ -14,12 +14,6 @@ class DisplayControl():
         self.prompt_text = Text(self.window, text=self.prompt_list[self.prompt_index], size= 40, color="white")
         self.gif_container = Picture(self.window, image="gif.gif")
         self.speech_text = Text(self.window, text="Speech", size= 40, color="white")
-        #self.prompt = Label(self.master, text="Prompts", bg="white")
-        #self.prompt.place(x=20, y=20)
-        #self.speech = Label(self.master, text="Speech", bg="white")
-        #self.speech.place(x=20, y=100)
-        #self.pack()
-        #self.master.mainloop()
     
     def updatePrompt(self):
         self.prompt_text.value = self.prompt_list[self.prompt_index]

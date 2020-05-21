@@ -1,4 +1,5 @@
 from colour import Color
+from pyinflect import getAllInflections, getInflection
 
 COLORS = [Color("#FFFF00"), #one
         Color("#FFE100"), #two
@@ -17,7 +18,6 @@ COLORS = [Color("#FFFF00"), #one
 
 
 class WordLibrary:
-
     # A Coded Library takes a filename and creates a list of word 
     # objects read in from the given file.
     def __init__(self, fileName=None):
@@ -66,8 +66,13 @@ class WordLibrary:
         
         finalLib = []
         for key in wordDict.keys():
-            temp = CodedWord(key, wordDict[key])
-            finalLib.append(temp)
+            curInflect = []
+            inflect = getAllInflections(key)
+            for l in inflect:
+                for i in inflect[l]:
+                    if not i in curInflect:
+                        temp = CodedWord(key, wordDict[key])
+                        finalLib.append(temp)
         return finalLib
 
     # This method clears the current word library.
