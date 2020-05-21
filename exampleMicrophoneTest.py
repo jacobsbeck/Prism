@@ -3,9 +3,9 @@ import wave
 
 r = sr.Recognizer()
 
-sampleRate = 48000.0 
+sampleRate = 44100.0 
 while True:
-        mic = sr.Microphone()
+        mic = sr.Microphone(sample_rate=44100, chunk_size=4096)
         try:
             with mic as source:
                 r.adjust_for_ambient_noise(source)
