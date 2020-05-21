@@ -71,7 +71,7 @@ class WordLibrary:
             for l in inflect:
                 for i in inflect[l]:
                     if not i in curInflect:
-                        temp = CodedWord(key, wordDict[key])
+                        temp = CodedWord(i, wordDict[key])
                         finalLib.append(temp)
         return finalLib
 

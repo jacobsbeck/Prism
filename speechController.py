@@ -72,7 +72,8 @@ class SpeechControl:
                 with self.mic as source:
                     #self.recognizer.adjust_for_ambient_noise(source)
                     self.recognizer.adjust_for_ambient_noise(source)
-                    audio = self.recognizer.listen(source)
+                    print("recording")
+                    audio = self.recognizer.record(source, 3)
                 if self.recognizer_name == Recognizers.Sphinx:
                     cur_str = self.recognizer.recognize_sphinx(audio)
                 elif self.recognizer_name == Recognizers.Bing:

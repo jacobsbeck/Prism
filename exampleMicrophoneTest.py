@@ -10,8 +10,8 @@ while True:
             with mic as source:
                 r.adjust_for_ambient_noise(source)
                 print("recording..")
-                audio = r.record(source, 3)
-                o = wave.open('demo0.wav', 'w')
+                audio = r.listen(source)
+                o = wave.open('demo3.wav', 'w')
                 o.setnchannels(1)
                 o.setsampwidth(2)
                 o.setframerate(sampleRate)
