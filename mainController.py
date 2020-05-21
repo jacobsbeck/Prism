@@ -22,14 +22,15 @@ def main(args):
     lights = LightControl(args.leds, args.hueIP, args.hueID)
     
     if (args.display):
+        #Thread(display = DisplayControl(prompts)).start()
         display = DisplayControl(prompts)
         speech = SpeechControl(lights, wordLib, colorLib, args.recognizer, display)
     else:
         speech = SpeechControl(lights, wordLib, colorLib, args.recognizer)
-    Thread(target = display.showDisplay).start()
+    #Thread(target = display.showDisplay).start()
     Thread(target = speech.createContinuousStream).start()
     display.showDisplay()
-    speech.createContinuousStream()
+    lights.endLights()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
