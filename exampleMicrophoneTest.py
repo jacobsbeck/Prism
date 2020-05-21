@@ -3,7 +3,7 @@ import wave
 
 r = sr.Recognizer()
 
-sampleRate = 44100.0 
+sampleRate = 48000.0 
 while True:
         mic = sr.Microphone()
         try:
