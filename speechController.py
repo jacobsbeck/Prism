@@ -51,12 +51,9 @@ class SpeechControl:
         if not mic_name == None:
             for i, microphone_name in enumerate(Microphone.list_microphone_names()):
                 if microphone_name == mic_name:
-                    self.mic = Microphone(device_index=i)
+                    self.mic = Microphone(device_index=i, sample_rate=44100, chunk_size=4096)
         else:
-            self.mic = Microphone()
-        for i, microphone_name in enumerate(Microphone.list_microphone_names()):
-            if microphone_name == mic_name:
-                self.mic = Microphone(device_index=i)
+            self.mic = Microphone(sample_rate=44100, chunk_size=4096)
 
         self.lights = light_control
         self.codedLibrary = codedWords
@@ -72,8 +69,9 @@ class SpeechControl:
                 with self.mic as source:
                     #self.recognizer.adjust_for_ambient_noise(source)
                     self.recognizer.adjust_for_ambient_noise(source)
-                    print("recording")
+                    self.display.showRecording()
                     audio = self.recognizer.record(source, 3)
+                    self.display.showProcessing()
                 if self.recognizer_name == Recognizers.Sphinx:
                     cur_str = self.recognizer.recognize_sphinx(audio)
                 elif self.recognizer_name == Recognizers.Bing:
