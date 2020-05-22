@@ -1,0 +1,29 @@
+Anger:Animosity, Annoyance, Chagrin, Conniption, Displeasure, Exasperation, Fury, Hatred, Impatience, Indignation, Infuriation, Ire, Irritability, Mad, Miff, Outrage, Rage, Resentment, Sore, Stew, Tantrum, Temper, Vexation
+Annoyance:Aggravation, Bother, Exasperation, Frustration, Grief, Irritation, Vexation
+Bitterness:Animosity, Animus, Antagonism, Antipathy, Bad Blood, Enmity, Gall, Grudge, Hostility, Jaundice, Rancor
+Disgust:Aversion, Distaste, Horror, Loathing, Nausea, Repugnance, Repulsion, Revulsion
+Dislike:Animosity, Animus, Antipathy, Aversion, Deprecate, Deprecation, Detestation, Disapproval, Disapprove, Disfavor, Disgust, Displeasure, Dissatisfaction, Distaste, Enmity, Frown (on or Upon), Hostility, Indisposition, Loathing, Objection, Offense, Opposition, Prejudice, Repugnance
+Envy:Begrudge, Covet, Grudge, Hunger Long, Lust, Resent, Thirst, Want, Yearn
+Exasperation:Aggravation, Anger, Annoyance, Bother, Displeasure, Fury, Ire, Irritation, Nuisance, Pest, Rage, Vexation
+Ferocity:Barbarity, Bloodthirstiness, Brutality, Cruelty, Murderousness, Savagery, Viciousness, Violence, Wildness
+Frustration:Annoyance, Bummer, Chagrin, Circumvention, Contravention, Curbing, Defeat, Disgruntlement, Dissatisfaction, Downer, Drag, Failure, Irritation, Letdown, Resentment, Unfulfillment, Vexation
+Fury:Conniption, Ferocity, Fierceness, Indignant, Ire, Madness, Power, Rage, Savagery, Sore, Stew, Turbulence, Vehemence, Violence
+Hate:Abhor, Animosity, Aversion, Bother, Detest, Disgust, Hostility, Irritant, Loathe, Nuisance, Objection, Pain, Rancor, Rankling, Repugnance, Repulsion, Resentment, Revenge, Revulsion, Scorn, Spite, Trouble, Venom
+Horror:Apprehension, Aversion, Awe, Chiller, Detest, Disgust, Dislike, Dismay, Dread, Fright, Hate, Loathe, Panic, Repugnance, Terror, Trepidation
+Insult:Abuse, Blasphemy, Contempt, Disdain, Disgrace, Disrespect, Indignity, Mockery, Offense, Outrage, Rude, Scorn, Shame, Slam, Slander, Slight, Taunt, Unpleasantry, Vilification
+Irritation:Excitability, Hypersensitivity, Inflammation, Irritability, Oversensitiveness, Oversensitivity, Raw, Sore, Tender, Tense
+Jealousy:Envy, Grudge, Resentment, Spite
+Loathing:Contempt, Detest, Disgust, Dislike, Hatred, Repugnant, Revulsion
+Neglect:Disdain, Disrespect, Indifferent, Scorn, Slight, Thoughtlessness, Unconcern
+Outrage:Abuse, Affront, Damage, Hurt, Insult, Offend, Shock, Violated
+Pity:Comfort, Commiserate, Console, Forgive, Pardon, Solace, Soothe, Sympathize
+Rage:Agitation, Animosity, Bitterness, Exasperation, Explosion, Frenzy, Fury, Ire, Irritation, Madness, Resent, Temper, Upset
+Resentment:Annoyance, Bitterness, Displeasure, Exacerbation, Exasperation, Fury, Grudge, Hurt, Ire, Irritation, Miff, Offend, Outrage, Rage, Spite, Vehemence, Vexation, Wrath
+Revulsion:Dislike, Hate, Horror, Loathe, Repulsed
+Scorn:Despise, Mocked, Ridicule, Slight, Taunt, Teased
+Spite:Animosity, Contempt, Despite, Grudge, Hate, Peeve, Resentment, Revenge, Vengeance, Venom, Vindictiveness
+Torment:Affliction, Agony, Anguish, Annoyed, Bothered, Harassment, Irritation, Misery, Nuisance, Pain, Pest, Plague, Suffering, Torture, Trouble, Vexation, Worry
+Vengefulness:Grudge, Resent, Revenge, Spite
+Wrath:Displeasure, Exasperation, Fury, Hate, Indignation, Ire, Irritation, Mad, Madness, Offend, Rage, Resentment, Stew, Temper, Vengeance
+Agitation:Composure, Disturbance, Tizzy, Turmoil, Unrest
+Alarm:Anxiety, Apprehension, Dismay, Distress, Dread, Fright, Nervousness, Panic, Scared, Stress, Tension, Terror, Trepidation, Unease
