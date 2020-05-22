@@ -17,7 +17,29 @@ class DisplayControl(Frame):
         self.prompt_list = promptList.prompts
         self.prompt_index = 0
 
-        Thread(target = self.playBackgroundAnimation).start()
+        self.frame = Frame(self.window, relief='raised', borderwidth=2)
+        self.frame.pack(fill=BOTH, expand=YES)
+        self.frame.pack_propagate(False)
+
+        self.label = ImageLabel(self.frame)
+        self.label.pack()
+        self.label.load('background.gif')
+
+        #image = Image.open('background1.png')
+        #photo = ImageTk.PhotoImage(image)
+
+        #self.label = Label(self.frame, image=photo)
+        self.label.place(x=0, y=0, relwidth=1, relheight=1)
+        center_frame = Frame(self.frame, relief='raised', borderwidth=2)
+        center_frame.place(relx=0.5, rely=0.5, anchor=CENTER)
+        self.processing = ImageLabel(center_frame)
+        self.processing.pack()
+        self.processing.load('processing.gif')
+        Label(center_frame, text=self.prompt_list[self.prompt_index], width=8).pack()
+        #Label(center_frame, text='Education', width=8).pack()
+        #self.container = Label(self.window, text=self.prompt_list[self.prompt_index], image=tk_image, compound='center', fg="white", font=("Product Sans Regular", 27))
+        self.label.pack()
+        #Thread(target = self.playBackgroundAnimation).start()
         """
         self.window = App(title="Prism", bg=(0,0,0))
         self.window.full_screen = True
@@ -35,19 +57,24 @@ class DisplayControl(Frame):
     def playBackgroundAnimation(self):
         curBackground = 0
         while True:
-            
             if (curBackground == 3):
                 curBackground = 0
             if (curBackground == 0):
-                image = Image.open('background1.png')
+                image = Image.open('background2.png')
+                print("hit1")
             elif (curBackground == 1):
                 image = Image.open('background2.png')
+                print("hit2")
             else:
                 image = Image.open('background3.png')
+                print("hit3")
 
-            tk_image = ImageTk.PhotoImage(image)
-            self.container = Label(self.window, text=self.prompt_list[self.prompt_index], image=tk_image, compound='center', fg="white", font=("Product Sans Regular", 27))
-            self.container.pack()
+            photo = ImageTk.PhotoImage(image)
+            self.label = Label(self.frame, image=photo)
+            self.label.place(x=0, y=0, relwidth=1, relheight=1)
+            self.label.image = photo
+            #self.container = Label(self.window, text=self.prompt_list[self.prompt_index], image=tk_image, compound='center', fg="white", font=("Product Sans Regular", 27))
+            self.label.pack()
             self.window.update()
             curBackground = curBackground + 1
             time.sleep(0.5)
@@ -72,8 +99,45 @@ class DisplayControl(Frame):
         self.window.update()
         
     def showDisplay(self):
-        self.window.display()
+        self.window.mainloop()
+
+class ImageLabel(Label):
+    """
+    A Label that displays images, and plays them if they are gifs
+    :im: A PIL Image instance or a string filename
+    """
+    def load(self, im):
+        if isinstance(im, str):
+            im = Image.open(im)
+        frames = []
+
+        try:
+            for i in count(1):
+                frames.append(ImageTk.PhotoImage(im.copy()))
+                im.seek(i)
+        except EOFError:
+            pass
+        self.frames = cycle(frames)
+
+        try:
+            self.delay = im.info['duration']
+        except:
+            self.delay = 100
+
+        if len(frames) == 1:
+            self.config(image=next(self.frames))
+        else:
+            self.next_frame()
+
+    def unload(self):
+        self.config(image=None)
+        self.frames = None
+
+    def next_frame(self):
+        if self.frames:
+            self.config(image=next(self.frames))
+            self.after(self.delay, self.next_frame)
 
 prompts = Prompts("prompts.txt")
 app = DisplayControl(prompts)
-app.window.mainloop()
+app.showDisplay()
