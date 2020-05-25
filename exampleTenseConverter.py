@@ -5,7 +5,7 @@ from pyinflect import getAllInflections, getInflection
 #    for i in inflect[x]:
 #        print (i)
 
-   
+""""
 def readFile(filename):
     filedata = open(filename, "r")
     lines = filedata.readlines()
@@ -36,5 +36,27 @@ def readFile(filename):
                     #temp = CodedWord(key, inflect[i])
                     #finalLib.append(temp)
     return finalLib
+"""
+def readFile(filename):
+    filedata = open(filename, "r")
+    lines = filedata.readlines()
+    tempSynomyn = { }
+    for line in lines:
+        keyWord = line.split(";")[0]
+        synomyns = line.rstrip().split(";")[1].split(", ")
+        #print(synomyns)
+        tempInflect = []
+        for s in synomyns:
+            #print(s)
+            #print(curInflect)
+            inflect = getAllInflections(s)
+            for l in inflect:
+                for i in inflect[l]:
+                    if not i in tempInflect:
+                        tempInflect.append(i)
+        tempSynomyn[keyWord] = tempInflect
+        print(keyWord)
+        print(tempInflect)
+    return tempSynomyn
 
-readFile("allCodedWords.txt")
+readFile("synomynWords.txt")

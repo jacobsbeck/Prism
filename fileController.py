@@ -15,6 +15,36 @@ COLORS = [Color("#FFFF00"), #one
         Color("#92D050"), #twelve
         Color("#FFFFFF")] #thirteen
 
+class SynomynLibrary:
+    def __init__(self, fileName=None):
+        self.synomynDict = { }
+        if (not fileName == None):
+            self.synomynDict = self.readFile(fileName)
+    
+    def __str__(self):
+        tempStr = ""
+        for word in self.synomynDict:
+            tempStr += str(word) + "\n"
+        return tempStr
+    
+    # This method takes a filename and reads the file data in coded word 
+    # objects that are then added to the word libaray.
+    def readFile(self, filename):
+        filedata = open(filename, "r")
+        lines = filedata.readlines()
+        tempSynomyn = { }
+        for line in lines:
+            keyWord = line.split(";")[0]
+            synomyns = line.rstrip().split(";")[1].split(", ")
+            tempInflect = []
+            for s in synomyns:
+                inflect = getAllInflections(s)
+                for l in inflect:
+                    for i in inflect[l]:
+                        if not i in tempInflect:
+                            tempInflect.append(i)
+            tempSynomyn[keyWord] = tempInflect
+        return tempSynomyn
 
 
 class WordLibrary:
@@ -65,6 +95,7 @@ class WordLibrary:
                         wordDict[word] = [curColor]
         
         finalLib = []
+        synomynLib = SynomynLibrary("synomynWords.txt")
         for key in wordDict.keys():
             curInflect = []
             inflect = getAllInflections(key)
@@ -73,6 +104,12 @@ class WordLibrary:
                     if not i in curInflect:
                         temp = CodedWord(i, wordDict[key])
                         finalLib.append(temp)
+                        curInflect.append(i)
+                        if i in synomynLib.synomynDict:
+                            for s in synomynLib.synomynDict[i]:
+                                tempS = CodedWord(s, wordDict[key])
+                                finalLib.append(tempS)
+                        
         return finalLib
 
     # This method clears the current word library.
