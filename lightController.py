@@ -55,9 +55,10 @@ class LightControl:
     def startLights(self):
         for i in range(self.LED_COUNT):
             self.strip.setPixelColor(i, Color(255, 255, 255))
-        for l in self.hue_lights:
-            l.xy = [0.33, 0.33]
-            l.brightness = 255
+            if self.hue_available:
+                for l in self.hue_lights:
+                    l.xy = [0.33, 0.33]
+                    l.brightness = 255
         self.strip.setBrightness(255)
         self.strip.show()
 
@@ -87,19 +88,20 @@ class LightControl:
                 self.strip.setBrightness(self.strip.getBrightness() - manipulation_value)
         if (rand_check == True):
             self.strip.setBrightness(random.randrange(0, 255))
-        for l in self.hue_lights:
-            if (change >= 0):
-                if (l.brightness >= 254 - manipulation_value):
-                    l.brightness = 254
+        if self.hue_available:
+            for l in self.hue_lights:
+                if (change >= 0):
+                    if (l.brightness >= 254 - manipulation_value):
+                        l.brightness = 254
+                    else:
+                        l.brightness = l.brightness + manipulation_value
                 else:
-                    l.brightness = l.brightness + manipulation_value
-            else:
-                if (l.brightness <= manipulation_value):
-                    l.brightness = 0
-                else:
-                    l.brightness = l.brightness - manipulation_value
-            if (rand_check == True):
-                l.brightness = random.randrange(0, 254)
+                    if (l.brightness <= manipulation_value):
+                        l.brightness = 0
+                    else:
+                        l.brightness = l.brightness - manipulation_value
+                if (rand_check == True):
+                    l.brightness = random.randrange(0, 254)
 
     # This method takes a boolean which represents if the dimness should randomly 
     # change, and a integer value that tells us to either raise or lower the dimness.
@@ -117,19 +119,20 @@ class LightControl:
                 self.strip.setBrightness(self.strip.getBrightness() + manipulation_value)
         if (rand_check == True):
             self.strip.setBrightness(random.randrange(0, 255))
-        for l in self.hue_lights:
-            if (change >= 0):
-                if (l.brightness <= manipulation_value):
-                    l.brightness = 0
+        if self.hue_available:
+            for l in self.hue_lights:
+                if (change >= 0):
+                    if (l.brightness <= manipulation_value):
+                        l.brightness = 0
+                    else:
+                        l.brightness = l.brightness - manipulation_value
                 else:
-                    l.brightness = l.brightness - manipulation_value
-            else:
-                if (l.brightness >= 254 - manipulation_value):
-                    l.brightness = 0
-                else:
-                    l.brightness = l.brightness + manipulation_value
-            if (rand_check == True):
-                l.brightness = random.randrange(0, 254)
+                    if (l.brightness >= 254 - manipulation_value):
+                        l.brightness = 0
+                    else:
+                        l.brightness = l.brightness + manipulation_value
+                if (rand_check == True):
+                    l.brightness = random.randrange(0, 254)
 
     # This method takes the current light color and changes it to the contrasting color.
     def setContrast(self):
@@ -139,11 +142,12 @@ class LightControl:
             cur_RGB = colorsys.hsv_to_rgb((360 - cur_HSV[0] * 360) / 360, cur_HSV[1], cur_HSV[2])
             print(cur_RGB)
             self.strip.setPixelColor(i, Color(int(cur_RGB[0] * 255), int(cur_RGB[1] * 255), int(cur_RGB[2] * 255)))
-        for l in self.hue_lights:
-            rgb_value = rgbxy.xy_to_rgb(l.xy[0], l.xy[1])
-            cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
-            new_rgb_value = colorsys.hsv_to_rgb((360 - cur_HSV[0] * 360) / 360, cur_HSV[1], cur_HSV[2])
-            l.xy = rgbxy.rgb_to_xy(new_rgb_value[0], new_rgb_value[1], new_rgb_value[2])
+        if self.hue_available:
+            for l in self.hue_lights:
+                rgb_value = rgbxy.xy_to_rgb(l.xy[0], l.xy[1])
+                cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
+                new_rgb_value = colorsys.hsv_to_rgb((360 - cur_HSV[0] * 360) / 360, cur_HSV[1], cur_HSV[2])
+                l.xy = rgbxy.rgb_to_xy(new_rgb_value[0], new_rgb_value[1], new_rgb_value[2])
 
     # This method takes a boolean which represents if the saturation should randomly 
     # change, and a integer value that tells us to either raise or lower the saturation.
@@ -166,23 +170,24 @@ class LightControl:
                     cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], (cur_HSV[1] * 100 - saturation_change) / 100, cur_HSV[2])
 #             print(colorsys.rgb_to_hsv(cur_RGB[0], cur_RGB[1], cur_RGB[2]))
             self.strip.setPixelColor(i, Color(int(cur_RGB[0]), int(cur_RGB[1]), int(cur_RGB[2])))
-        for l in self.hue_lights:
-            rgb_value = rgbxy.xy_to_rgb(l.xy[0], l.xy[1])
-            cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
-            if rand_check:
-                cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], random.randrange(0, 100) / 100, cur_HSV[2])
-            elif change >= 0:
-                if (cur_HSV[1] * 100 > 100 - saturation_change):
-                    cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], 1, cur_HSV[2])
+        if self.hue_available:
+            for l in self.hue_lights:
+                rgb_value = rgbxy.xy_to_rgb(l.xy[0], l.xy[1])
+                cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
+                if rand_check:
+                    cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], random.randrange(0, 100) / 100, cur_HSV[2])
+                elif change >= 0:
+                    if (cur_HSV[1] * 100 > 100 - saturation_change):
+                        cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], 1, cur_HSV[2])
+                    else:
+                        cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], (cur_HSV[1] * 100 + saturation_change) / 100, cur_HSV[2])
                 else:
-                    cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], (cur_HSV[1] * 100 + saturation_change) / 100, cur_HSV[2])
-            else:
-                if (cur_HSV[1] * 100 < saturation_change):
-                    cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], 0, cur_HSV[2])
-                else:
-                    cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], (cur_HSV[1] * 100 - saturation_change) / 100, cur_HSV[2])
-            #print(colorsys.rgb_to_hsv(cur_RGB[0], cur_RGB[1], cur_RGB[2]))
-            l.xy = rgbxy.rgb_to_xy(cur_RGB[0] * 255, cur_RGB[1] * 255, cur_RGB[2] * 255)
+                    if (cur_HSV[1] * 100 < saturation_change):
+                        cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], 0, cur_HSV[2])
+                    else:
+                        cur_RGB = colorsys.hsv_to_rgb(cur_HSV[0], (cur_HSV[1] * 100 - saturation_change) / 100, cur_HSV[2])
+                #print(colorsys.rgb_to_hsv(cur_RGB[0], cur_RGB[1], cur_RGB[2]))
+                l.xy = rgbxy.rgb_to_xy(cur_RGB[0] * 255, cur_RGB[1] * 255, cur_RGB[2] * 255)
 
 
     # This method takes a boolean which represents if the hue should randomly 
@@ -205,24 +210,25 @@ class LightControl:
                 else:
                     cur_RGB = colorsys.hsv_to_rgb((cur_HSV[0] * 360 - hue_change) / 360, cur_HSV[1], cur_HSV[2])
             self.strip.setPixelColor(i, Color(int(cur_RGB[1]), int(cur_RGB[0]), int(cur_RGB[2])))
-        for l in self.hue_lights:
-            rgb_value = rgbxy.xy_to_rgb(l.xy[0], l.xy[1])
-            print(rgb_value)
-            cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
-            if rand_check:
-                cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 360) / 360, cur_HSV[1], cur_HSV[2])
-            elif change >= 0:
-                if (cur_HSV[0] * 360 > 360 - hue_change):
-                    cur_RGB = colorsys.hsv_to_rgb(360, cur_HSV[1], cur_HSV[2])
+        if self.hue_available:
+            for l in self.hue_lights:
+                rgb_value = rgbxy.xy_to_rgb(l.xy[0], l.xy[1])
+                print(rgb_value)
+                cur_HSV = colorsys.rgb_to_hsv(rgb_value[0], rgb_value[1], rgb_value[2])
+                if rand_check:
+                    cur_RGB = colorsys.hsv_to_rgb(random.randrange(0, 360) / 360, cur_HSV[1], cur_HSV[2])
+                elif change >= 0:
+                    if (cur_HSV[0] * 360 > 360 - hue_change):
+                        cur_RGB = colorsys.hsv_to_rgb(360, cur_HSV[1], cur_HSV[2])
+                    else:
+                        cur_RGB = colorsys.hsv_to_rgb((cur_HSV[0] * 360 + hue_change) / 360, cur_HSV[1], cur_HSV[2])
+                        #print((cur_HSV[0] * 360 + hue_change) / 360, cur_HSV[1], cur_HSV[2])
                 else:
-                    cur_RGB = colorsys.hsv_to_rgb((cur_HSV[0] * 360 + hue_change) / 360, cur_HSV[1], cur_HSV[2])
-                    #print((cur_HSV[0] * 360 + hue_change) / 360, cur_HSV[1], cur_HSV[2])
-            else:
-                if (cur_HSV[0] * 360 < hue_change):
-                    cur_RGB = colorsys.hsv_to_rgb(0, cur_HSV[1], cur_HSV[2])
-                else:
-                    cur_RGB = colorsys.hsv_to_rgb((cur_HSV[0] * 360 - hue_change) / 360, cur_HSV[1], cur_HSV[2])
-            l.xy = rgbxy.rgb_to_xy(cur_RGB[0], cur_RGB[1], cur_RGB[2])
+                    if (cur_HSV[0] * 360 < hue_change):
+                        cur_RGB = colorsys.hsv_to_rgb(0, cur_HSV[1], cur_HSV[2])
+                    else:
+                        cur_RGB = colorsys.hsv_to_rgb((cur_HSV[0] * 360 - hue_change) / 360, cur_HSV[1], cur_HSV[2])
+                l.xy = rgbxy.rgb_to_xy(cur_RGB[0], cur_RGB[1], cur_RGB[2])
 
     # This method takes a boolean which represents if the temperature should randomly 
     # change, and a integer value that tells us to either raise or lower the temperature.
@@ -241,33 +247,36 @@ class LightControl:
                 new_XY = Color.CCT_to_xy(random.randrange(low_temp, cur_CCT))
             new_RGB = rgbxy.xy_to_rgb(new_XY[0], new_XY[1])
             self.strip.setPixelColor(i, Color(new_RGB[1], new_RGB[0], new_RGB[2]))
-        for l in self.hue_lights:
-            cur_CCT = Color.xy_to_CCT(l.xy)
-            if rand_check:
-                new_XY = Color.CCT_to_xy(random.randrange(low_temp, high_temp))
-            elif change >= 0:
-                new_XY = Color.CCT_to_xy(random.randrange(cur_CCT, high_temp))
-            else:
-                new_XY = Color.CCT_to_xy(random.randrange(low_temp, cur_CCT))
-            l.xy = new_XY
+        if self.hue_available:
+            for l in self.hue_lights:
+                cur_CCT = Color.xy_to_CCT(l.xy)
+                if rand_check:
+                    new_XY = Color.CCT_to_xy(random.randrange(low_temp, high_temp))
+                elif change >= 0:
+                    new_XY = Color.CCT_to_xy(random.randrange(cur_CCT, high_temp))
+                else:
+                    new_XY = Color.CCT_to_xy(random.randrange(low_temp, cur_CCT))
+                l.xy = new_XY
 
     # This method takes the current color of the lights and applies a tint to that color.
     def applyTint(self):
         for i in range(self.LED_COUNT):
             cur_RGB = rgbint_to_rgb(self.strip.getPixelColor(i))
             self.strip.setPixelColor(i, Color(int((255 - cur_RGB[1]) / 2), int((255 - cur_RGB[0]) / 2), int((255 - cur_RGB[2]) / 2)))
-        for l in self.hue_lights:
-            cur_RGB = rgbxy.xy_to_rgb(l.xy)
-            l.xy = rgbxy.rgb_to_xy(int((255 - cur_RGB[0]) / 2), int((255 - cur_RGB[1]) / 2), int((255 - cur_RGB[2]) / 2))
+        if self.hue_available:
+            for l in self.hue_lights:
+                cur_RGB = rgbxy.xy_to_rgb(l.xy)
+                l.xy = rgbxy.rgb_to_xy(int((255 - cur_RGB[0]) / 2), int((255 - cur_RGB[1]) / 2), int((255 - cur_RGB[2]) / 2))
 
     # This method takes the current color of the lights and applies a shade to that color.
     def applyShade(self):
         for i in range(self.LED_COUNT):
             cur_RGB = rgbint_to_rgb(self.strip.getPixelColor(i))
             self.strip.setPixelColor(i, Color(int(cur_RGB[0] / 2), int(cur_RGB[1] / 2), int(cur_RGB[2] / 2)))
-        for l in self.hue_lights:
-            cur_RGB = rgbxy.xy_to_rgb(l.xy[0], l.xy[1])
-            l.xy = rgbxy.rgb_to_xy(cur_RGB[0] / 2, cur_RGB[1] / 2, cur_RGB[2] / 2)
+        if self.hue_available:
+            for l in self.hue_lights:
+                cur_RGB = rgbxy.xy_to_rgb(l.xy[0], l.xy[1])
+                l.xy = rgbxy.rgb_to_xy(cur_RGB[0] / 2, cur_RGB[1] / 2, cur_RGB[2] / 2)
 
     # This method takes the current color of the lights and applies a tone to that color.
     def applyTone(self):
@@ -287,14 +296,15 @@ class LightControl:
             elif (i / 25 == 8):
                 self.strip.setPixelColor(i, Color(0, 255, 0))
         j = 0
-        for l in self.hue_lights:
-            if j % 3 == 0:
-                l.xy = rgbxy.rgb_to_xy(1, 1, 0)
-            elif j % 3 == 1:
-                l.xy = rgbxy.rgb_to_xy(0, 0, 1)
-            elif j % 3 == 2:
-                l.xy = rgbxy.rgb_to_xy(1, 0, 0)
-            j = j + 1
+        if self.hue_available:
+            for l in self.hue_lights:
+                if j % 3 == 0:
+                    l.xy = rgbxy.rgb_to_xy(1, 1, 0)
+                elif j % 3 == 1:
+                    l.xy = rgbxy.rgb_to_xy(0, 0, 1)
+                elif j % 3 == 2:
+                    l.xy = rgbxy.rgb_to_xy(1, 0, 0)
+                j = j + 1
   
     # This method applies the secondary colors to the lights, green, orange and purple. For 
     # the strip the colors are evenly divided into sections, while the hue 
@@ -308,14 +318,15 @@ class LightControl:
             elif (i / 25 == 10):
                 self.strip.setPixelColor(i, Color(128, 255, 0))
         j = 0
-        for l in self.hue_lights:
-            if j % 3 == 0:
-                l.xy = rgbxy.rgb_to_xy(0, 1, 0)
-            elif j % 3 == 1:
-                l.xy = rgbxy.rgb_to_xy(130/255, 238/255, 238/255)
-            elif j % 3 == 2:
-                l.xy = rgbxy.rgb_to_xy(1, 128/255, 0)
-            j = j + 1
+        if self.hue_available:
+            for l in self.hue_lights:
+                if j % 3 == 0:
+                    l.xy = rgbxy.rgb_to_xy(0, 1, 0)
+                elif j % 3 == 1:
+                    l.xy = rgbxy.rgb_to_xy(130/255, 238/255, 238/255)
+                elif j % 3 == 2:
+                    l.xy = rgbxy.rgb_to_xy(1, 128/255, 0)
+                j = j + 1
 
     # This method applies the tertiary colors to the lights, yellow-orange, 
     # red-orange, red-violet, blue-violet, blue-green, and yellow-green. For 
@@ -336,40 +347,44 @@ class LightControl:
             elif (i / 25 == 11):
                 self.strip.setPixelColor(i, Color(255, 174, 66))
         j = 0
-        for l in self.hue_lights:
-            if j % 6 == 0:
-                l.xy = rgbxy.rgb_to_xy(205/255, 154/255, 50/255)
-            elif j % 6 == 1:
-                l.xy = rgbxy.rgb_to_xy(221/255, 0, 221/255)
-            elif j % 6 == 2:
-                l.xy = rgbxy.rgb_to_xy(43/255, 138/255, 226/255)
-            elif j % 6 == 3:
-                l.xy = rgbxy.rgb_to_xy(21/255, 199/255, 133/255)
-            elif j % 6 == 4:
-                l.xy = rgbxy.rgb_to_xy(69/255, 1, 0)
-            elif j % 6 == 5:
-                l.xy = rgbxy.rgb_to_xy(174/255, 1, 66/255)
-            j = j + 1
+        if self.hue_available:
+            for l in self.hue_lights:
+                if j % 6 == 0:
+                    l.xy = rgbxy.rgb_to_xy(205/255, 154/255, 50/255)
+                elif j % 6 == 1:
+                    l.xy = rgbxy.rgb_to_xy(221/255, 0, 221/255)
+                elif j % 6 == 2:
+                    l.xy = rgbxy.rgb_to_xy(43/255, 138/255, 226/255)
+                elif j % 6 == 3:
+                    l.xy = rgbxy.rgb_to_xy(21/255, 199/255, 133/255)
+                elif j % 6 == 4:
+                    l.xy = rgbxy.rgb_to_xy(69/255, 1, 0)
+                elif j % 6 == 5:
+                    l.xy = rgbxy.rgb_to_xy(174/255, 1, 66/255)
+                j = j + 1
 
     # This method takes a boolean value that tells weather to turn the lights on or off.
     def lightSwitch(self, on):
         if on:
             self.strip.setBrightness(255)
-            for l in self.hue_lights:
-                l.brightness = 255
+            if self.hue_available:
+                for l in self.hue_lights:
+                    l.brightness = 255
         else:
             self.strip.setBrightness(0)
-            for l in self.hue_lights:
-                l.brightness = 0
+            if self.hue_available:
+                for l in self.hue_lights:
+                    l.brightness = 0
   
     # This method takes an array of three numbers representing the rgb values of a color, 
     # and turns the lights to that color.
     def setColor(self, col):
         for i in range(self.LED_COUNT):
             self.strip.setPixelColor(i, Color(int(col[1] * 255), int(col[0] * 255), int(col[2] * 255)))
-        for l in self.hue_lights:
-            l.xy = rgbxy.rgb_to_xy(int(col[0] * 255), int(col[1] * 255), int(col[2] * 255))
-            print(col[0], col[1], col[2])
+        if self.hue_available:
+            for l in self.hue_lights:
+                l.xy = rgbxy.rgb_to_xy(int(col[0] * 255), int(col[1] * 255), int(col[2] * 255))
+                print(col[0], col[1], col[2])
   
     # This method takes an array of colors which is represented as three number rgb arrays, 
     # and changes the lights to a mixed version of the colors.
@@ -385,8 +400,9 @@ class LightControl:
         cur_RGB = rgbint_to_rgb(tempColor)
         for i in range(self.LED_COUNT):
             self.strip.setPixelColor(i, Color(cur_RGB[1], cur_RGB[0], cur_RGB[2]))
-        for l in self.hue_lights:
-            l.xy = rgbxy.rgb_to_xy(int(cur_RGB[0]), int(cur_RGB[1]), int(cur_RGB[2]))
+        if self.hue_available:
+            for l in self.hue_lights:
+                l.xy = rgbxy.rgb_to_xy(int(cur_RGB[0]), int(cur_RGB[1]), int(cur_RGB[2]))
 
 def rgbint_to_rgb(rgbint):
     return (rgbint // 256 // 256 % 256, rgbint // 256 % 256, rgbint % 256)

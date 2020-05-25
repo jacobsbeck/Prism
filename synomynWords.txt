@@ -41,9 +41,8 @@ Nervousness;Agitation, Fluster, Fuss, Impatience, Moodiness, Neurotic, Sensitivi
 Panic;Agitation, Alarm, Confusion, Dismay, Dread, Hysteria, Scared, Terror, Trepidation
 Shame;Abashment, Chagrin, Confusion, Contempt, Contrition, Disgust, Dishonor, Guilt, Humiliation, Mortification, Remorse, Treachery 
 Tenseness;Anxiety, Fervor, Fierceness, Fury, Intense, Severity, Strength, Vehemence, Weightiness, Wild 
-Uneasiness;Agitation, Anguish, Anxiety, Apprehension, Edgy, Restless, Turmoil, Unease, Worry 
-Worry;Anguish, Annoyance, Apprehension, Care, Concern, Distress, Disturbed, Doubt, Irritation, Misery, Misgiving, Pain, Plague, Torment,
-Torture, Uncertainty, Uneasiness, Vexation, Woe
+Uneasiness;Agitation, Anguish, Anxiety, Apprehension, Edgy, Restless, Turmoil, Unease, Worry
+Worry;Anguish, Annoyance, Apprehension, Care, Concern, Distress, Disturbed, Doubt, Irritation, Misery, Misgiving, Pain, Plague, Torment, Torture, Uncertainty, Uneasiness, Vexation, Woe
 Caring;Attend, Cherish, Consider, Desire, Enjoy, Foster, Like, Prize, Protect, Respect, Tend, Treasure, Want, Watch
 Cheerfulness;Animation, Cheer, Comfort, Delight, Encourage, Exuberance, Glad, Glee, Hilarity, Hopefulness, Joy, Merry, Mirth, Optimism
 Compassion;Benevolence, Charity, Condolence, Consideration, Empathy, Grace, Kind, Mercy, Sorrow, Sympathy, Tender, Yearn

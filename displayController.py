@@ -10,7 +10,7 @@ from threading import Thread
 
 class DisplayControl(Frame):
     def __init__(self, promptList):
-        font.add_file('ProductSans.ttf')
+        #font.add_file('ProductSans.ttf')
         customFont = ('Helvetica', 27)
         self.window = Tk()
         super().__init__(self.window)
@@ -38,7 +38,7 @@ class DisplayControl(Frame):
         self.processing = ImageLabel(center_frame, bg='black')
         self.processing.pack()
         self.processing.load('processing.gif')
-        self.label = Label(center_frame, text=self.prompt_list[self.prompt_index], width=500, bg='black', fg='white', font=customFont)
+        self.label = Label(center_frame, text=self.prompt_list[self.prompt_index], width=500, bg='black', fg='white', font=customFont, wraplength=500)
         #Label(center_frame, text='Education', width=8).pack()
         #self.container = Label(self.window, text=self.prompt_list[self.prompt_index], image=tk_image, compound='center', fg="white", font=("Product Sans Regular", 27))
         self.label.pack()

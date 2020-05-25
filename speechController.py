@@ -68,10 +68,9 @@ class SpeechControl:
         while True:
             try:
                 with self.mic as source:
-                    #self.recognizer.adjust_for_ambient_noise(source)
                     self.recognizer.adjust_for_ambient_noise(source)
                     self.display.hideProcessing()
-                    audio = self.recognizer.record(source, 3)
+                    audio = self.recognizer.listen(source)
                     self.display.showProcessing()
                 if self.recognizer_name == Recognizers.Sphinx:
                     cur_str = self.recognizer.recognize_sphinx(audio)
@@ -84,10 +83,11 @@ class SpeechControl:
                 elif self.recognizer_name == Recognizers.Google:
                     cur_str = self.recognizer.recognize_google(audio)
                 print(cur_str)
+                self.word_classify_check(cur_str)
                 if (self.display != None):
                     self.display.updateSpeechDetected(cur_str)
                     #Thread(target = self.display.updateSpeechDetected, args=(cur_str,)).start()
-                self.word_classify_check(cur_str)
+
             except KeyboardInterrupt:
                 self.lights.endLights()
                 break  

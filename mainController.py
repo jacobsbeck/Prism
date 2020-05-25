@@ -26,13 +26,16 @@ def main(args):
         speech = SpeechControl(lights, wordLib, colorLib, args.recognizer, display)
     else:
         speech = SpeechControl(lights, wordLib, colorLib, args.recognizer)
-    Thread(target = speech.createContinuousStream).start()
-    display.showDisplay()
+    try:   
+        Thread(target = speech.createContinuousStream).start()
+        display.showDisplay()
+    except KeyboardInterrupt:
+                lights.endLights()
     lights.endLights()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('-ip', '--hueIP',          metavar='ip_address',     default='10.0.0.149',                            help='uses this is you have hue lights and bridge you would like to connect')
+    parser.add_argument('-ip', '--hueIP',          metavar='ip_address',     default=None,                            help='uses this is you have hue lights and bridge you would like to connect')
     parser.add_argument('-id', '--hueID',          metavar='user_id',     default='vS4w2KQu1fNDEwj-mpp2r8dujuJgr-dASUiGVb9t', help='uses this is you have hue lights and bridge you would like to connect')
     parser.add_argument('-wf', '--wordFile',       metavar='filename',     default='allCodedWords.txt',                       help='use this if you have your own file of data')
     parser.add_argument('-cf', '--colorFile',      metavar='filename',     default='colorFile.txt',                           help='use this if you have your own file of data')
