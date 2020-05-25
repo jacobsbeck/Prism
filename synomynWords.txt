@@ -1,29 +1,108 @@
-Anger:Animosity, Annoyance, Chagrin, Conniption, Displeasure, Exasperation, Fury, Hatred, Impatience, Indignation, Infuriation, Ire, Irritability, Mad, Miff, Outrage, Rage, Resentment, Sore, Stew, Tantrum, Temper, Vexation
-Annoyance:Aggravation, Bother, Exasperation, Frustration, Grief, Irritation, Vexation
-Bitterness:Animosity, Animus, Antagonism, Antipathy, Bad Blood, Enmity, Gall, Grudge, Hostility, Jaundice, Rancor
-Disgust:Aversion, Distaste, Horror, Loathing, Nausea, Repugnance, Repulsion, Revulsion
-Dislike:Animosity, Animus, Antipathy, Aversion, Deprecate, Deprecation, Detestation, Disapproval, Disapprove, Disfavor, Disgust, Displeasure, Dissatisfaction, Distaste, Enmity, Frown (on or Upon), Hostility, Indisposition, Loathing, Objection, Offense, Opposition, Prejudice, Repugnance
-Envy:Begrudge, Covet, Grudge, Hunger Long, Lust, Resent, Thirst, Want, Yearn
-Exasperation:Aggravation, Anger, Annoyance, Bother, Displeasure, Fury, Ire, Irritation, Nuisance, Pest, Rage, Vexation
-Ferocity:Barbarity, Bloodthirstiness, Brutality, Cruelty, Murderousness, Savagery, Viciousness, Violence, Wildness
-Frustration:Annoyance, Bummer, Chagrin, Circumvention, Contravention, Curbing, Defeat, Disgruntlement, Dissatisfaction, Downer, Drag, Failure, Irritation, Letdown, Resentment, Unfulfillment, Vexation
-Fury:Conniption, Ferocity, Fierceness, Indignant, Ire, Madness, Power, Rage, Savagery, Sore, Stew, Turbulence, Vehemence, Violence
-Hate:Abhor, Animosity, Aversion, Bother, Detest, Disgust, Hostility, Irritant, Loathe, Nuisance, Objection, Pain, Rancor, Rankling, Repugnance, Repulsion, Resentment, Revenge, Revulsion, Scorn, Spite, Trouble, Venom
-Horror:Apprehension, Aversion, Awe, Chiller, Detest, Disgust, Dislike, Dismay, Dread, Fright, Hate, Loathe, Panic, Repugnance, Terror, Trepidation
-Insult:Abuse, Blasphemy, Contempt, Disdain, Disgrace, Disrespect, Indignity, Mockery, Offense, Outrage, Rude, Scorn, Shame, Slam, Slander, Slight, Taunt, Unpleasantry, Vilification
-Irritation:Excitability, Hypersensitivity, Inflammation, Irritability, Oversensitiveness, Oversensitivity, Raw, Sore, Tender, Tense
-Jealousy:Envy, Grudge, Resentment, Spite
-Loathing:Contempt, Detest, Disgust, Dislike, Hatred, Repugnant, Revulsion
-Neglect:Disdain, Disrespect, Indifferent, Scorn, Slight, Thoughtlessness, Unconcern
-Outrage:Abuse, Affront, Damage, Hurt, Insult, Offend, Shock, Violated
-Pity:Comfort, Commiserate, Console, Forgive, Pardon, Solace, Soothe, Sympathize
-Rage:Agitation, Animosity, Bitterness, Exasperation, Explosion, Frenzy, Fury, Ire, Irritation, Madness, Resent, Temper, Upset
-Resentment:Annoyance, Bitterness, Displeasure, Exacerbation, Exasperation, Fury, Grudge, Hurt, Ire, Irritation, Miff, Offend, Outrage, Rage, Spite, Vehemence, Vexation, Wrath
-Revulsion:Dislike, Hate, Horror, Loathe, Repulsed
-Scorn:Despise, Mocked, Ridicule, Slight, Taunt, Teased
-Spite:Animosity, Contempt, Despite, Grudge, Hate, Peeve, Resentment, Revenge, Vengeance, Venom, Vindictiveness
-Torment:Affliction, Agony, Anguish, Annoyed, Bothered, Harassment, Irritation, Misery, Nuisance, Pain, Pest, Plague, Suffering, Torture, Trouble, Vexation, Worry
-Vengefulness:Grudge, Resent, Revenge, Spite
-Wrath:Displeasure, Exasperation, Fury, Hate, Indignation, Ire, Irritation, Mad, Madness, Offend, Rage, Resentment, Stew, Temper, Vengeance
-Agitation:Composure, Disturbance, Tizzy, Turmoil, Unrest
-Alarm:Anxiety, Apprehension, Dismay, Distress, Dread, Fright, Nervousness, Panic, Scared, Stress, Tension, Terror, Trepidation, Unease
+Anger;Animosity, Annoyance, Chagrin, Conniption, Displeasure, Exasperation, Fury, Hatred, Impatience, Indignation, Infuriated, Ire, Irritability, Mad, Miff, Outrage, Rage, Resentment, Sore, Stew, Tantrum, Temper, Vexation
+Annoyance;Aggravation, Bother, Exasperation, Frustration, Grief, Irritation, Vexation
+Bitterness;Animosity, Animus, Antagonism, Antipathy, Bad Blood, Enmity, Gall, Grudge, Hostility, Jaundice, Rancor
+Disgust;Aversion, Distaste, Horror, Loathing, Nausea, Repugnance, Repulsion, Revulsion
+Dislike;Animosity, Animus, Antipathy, Aversion, Deprecate, Deprecation, Detestation, Disapproval, Disapprove, Disfavor, Disgust, Displeasure, Dissatisfaction, Distaste, Enmity, Frown, Hostility, Indisposition, Loathing, Objection, Offense, Opposition, Prejudice, Repugnance
+Envy;Begrudge, Covet, Grudge, Hunger Long, Lust, Resent, Thirst, Want, Yearn
+Exasperation;Aggravation, Annoyance, Bother, Displeasure, Fury, Ire, Irritation, Nuisance, Pest, Rage, Vexation
+Ferocity;Barbarity, Bloodthirstiness, Brutality, Cruelty, Murderousness, Savagery, Viciousness, Violence, Wildness
+Frustration;Annoyance, Bummer, Chagrin, Circumvention, Contravention, Curbing, Defeat, Disgruntlement, Dissatisfaction, Downer, Drag, Failure, Irritation, Letdown, Resentment, Unfulfillment, Vexation
+Fury;Conniption, Ferocity, Fierceness, Indignant, Ire, Madness, Power, Rage, Savagery, Sore, Stew, Turbulence, Vehemence, Violence
+Hate;Abhor, Animosity, Aversion, Bother, Detest, Disgust, Hostility, Irritant, Loathe, Nuisance, Objection, Pain, Rancor, Rankling, Repugnance, Repulsion, Resentment, Revenge, Revulsion, Scorn, Spite, Trouble, Venom
+Horror;Alarm, Apprehension, Aversion, Awe, Chiller, Detest, Disgust, Dislike, Dismay, Dread, Fright, Loathe, Panic, Repugnance, Terror, Trepidation
+Insult;Abuse, Blasphemy, Contempt, Disdain, Disgrace, Disrespect, Indignity, Mockery, Offense, Outrage, Rude, Scorn, Shame, Slam, Slander, Slight, Taunt, Unpleasantry, Vilification
+Irritation;Excitability, Hypersensitivity, Inflammation, Irritability, Oversensitiveness, Oversensitivity, Raw, Sore, Tender, Tense
+Jealousy;Envy, Grudge, Resentment, Spite
+Loathing;Contempt, Detest, Disgust, Dislike, Hatred, Repugnant, Revulsion
+Neglect;Disdain, Disrespect, Indifferent, Scorn, Slight, Thoughtlessness, Unconcern
+Outrage;Abuse, Affront, Damage, Hurt, Insult, Offend, Shock, Violated
+Pity;Comfort, Commiserate, Console, Forgive, Pardon, Solace, Soothe, Sympathize
+Rage;Agitation, Animosity, Bitterness, Exasperation, Explosion, Frenzy, Fury, Ire, Irritation, Madness, Resent, Temper, Upset
+Resentment;Annoyance, Bitterness, Displeasure, Exacerbation, Exasperation, Fury, Grudge, Hurt, Ire, Irritation, Miff, Offend, Outrage, Rage, Spite, Vehemence, Vexation, Wrath
+Revulsion;Dislike, Horror, Loathe, Repulsed
+Scorn;Despise, Mocked, Ridicule, Slight, Taunt, Teased
+Spite;Animosity, Contempt, Despite, Grudge, Peeve, Resentment, Revenge, Vengeance, Venom, Vindictiveness
+Torment;Affliction, Agony, Anguish, Annoyed, Bothered, Harassment, Irritation, Misery, Nuisance, Pain, Pest, Plague, Suffering, Torture, Trouble, Vexation, Worry
+Vengefulness;Grudge, Resent, Revenge, Spite
+Wrath;Displeasure, Exasperation, Fury, Indignation, Ire, Irritation, Mad, Madness, Offend, Rage, Resentment, Stew, Temper, Vengeance
+Agitation;Composure, Disturbance, Tizzy, Turmoil, Unrest
+Alarm;Anxiety, Apprehension, Dismay, Distress, Dread, Fright, Nervousness, Panic, Scared, Stress, Tension, Terror, Trepidation, Unease
+Anxiety;Angst, Apprehension, Botheration, Concern, Distress, Doubt, Foreboding, Fretfulness, Jitters, Misery, Nervousness, Panic, Restlessness, Suffering, Suspense, Uncertainty, Unease, Worry
+Apprehension;Alarm, Apprehensiveness, Concern, Disquiet, Doubt, Dread, Foreboding, Mistrust, Premonition, Suspicion, Trepidation, Uneasiness, Worry
+Dejection;Depression, Grief, Melancholy, Sorrow
+Dread;Affright, Alarm, Apprehension, Aversion, Awe, Consternation, Dismay, Fright, Horror, Jitters, Panic, Terror, Trepidation, Trepidity, Worriment 
+Embarrassment;Awkward, Bashfulness, Chagrin, Composure, Confusion, Dilemma, Distress, Mortified, Self-conscious, Shyness, Tangle, Timid, Unease
+Fear;Agitation, Anxiety, Aversion, Concern, Coward, Dismay, Distress, Dread, Fainthearted, Fright, Panic, Scare, Suspicious, Terror, Timid, Unease, Worry
+Fright;Alarm, Dismay, Dread, Horror, Panic, Quaking, Scared, Shock, Terror, Trepidation
+Hostility;Abhorrence, Aggression, Animosity, Aversion, Bitterness, Detest, Estrangement, Grudge, Hatred, Malice, Opposition, Resentment, Spite, Unfriendly, Venom
+Insecurity;Doubt, Hesitancy, Indecision, Self-doubt, Uncertainty, Vacillation
+Mortification;Embarrassment, Resignation, Shame
+Nervousness;Agitation, Fluster, Fuss, Impatience, Moodiness, Neurotic, Sensitivity, Stress, Tension, Timid, Tizzy, Touchiness, Turbulence, Uneasiness, Worry
+Panic;Agitation, Alarm, Confusion, Dismay, Dread, Hysteria, Scared, Terror, Trepidation
+Shame;Abashment, Chagrin, Confusion, Contempt, Contrition, Disgust, Dishonor, Guilt, Humiliation, Mortification, Remorse, Treachery 
+Tenseness;Anxiety, Fervor, Fierceness, Fury, Intense, Severity, Strength, Vehemence, Weightiness, Wild 
+Uneasiness;Agitation, Anguish, Anxiety, Apprehension, Edgy, Restless, Turmoil, Unease, Worry 
+Worry;Anguish, Annoyance, Apprehension, Care, Concern, Distress, Disturbed, Doubt, Irritation, Misery, Misgiving, Pain, Plague, Torment,
+Torture, Uncertainty, Uneasiness, Vexation, Woe
+Caring;Attend, Cherish, Consider, Desire, Enjoy, Foster, Like, Prize, Protect, Respect, Tend, Treasure, Want, Watch
+Cheerfulness;Animation, Cheer, Comfort, Delight, Encourage, Exuberance, Glad, Glee, Hilarity, Hopefulness, Joy, Merry, Mirth, Optimism
+Compassion;Benevolence, Charity, Condolence, Consideration, Empathy, Grace, Kind, Mercy, Sorrow, Sympathy, Tender, Yearn
+Contentment;Complacency, Content, Contentedness, Ease, Fulfillment, Glad, Gratified, Peace, Pleasure, Satisfaction, Serenity
+Delight;Content, Ecstasy, Enchantment, Glad, Glee, Gratification, Hilarity, Jolly, Joy, Mirth, Pleasure, Relish, Satisfaction, Transport
+Eagerness;Ambition, Anticipation, Earnest, Excitement, Greedy, Hunger, Impatience, Longing, Vehemence, Voracity, Yearn, Zeal
+Enjoyment;Amusement, Enjoy, Entertainment, Fun, Glad, Gratification, Joy, Pleasure, Rejoice, Relax, Relish, Satisfy, Sensual, Thrill
+Gladness;Cheer, Delight, Glee, Hilarity, Jolly, Joy, Mirth, Pleasure
+Happiness;Blessed, Bliss, Cheer, Content, Delight, Ecstasy, Elation, Enchanted, Enjoy, Euphoria, Exhilaration, Exuberance, Glad, Glee, Hilarity, Hope, Joy, Jubilant, Merry, Mirth, Optimism, Playful, Pleasure, Rejoice 
+Hope;Aspiration, Belief, Confidence, Desire, Endurance, Faith, Fortunate, Optimism 
+Jolliness;Bright, Brilliance, Cheer, Elated, Exhilarated, Fun, Glad, Glee, Hilarious, Light, Lively, Merry, Mirth 
+Joy;Amuse, Bliss, Charm, Cheer, Comfort, Delight, Ecstasy, Elation, Glad, Glee, Gratified, Hilarious, Humor, Jubilant, Lively, Merry, Mirth, Pride, Rejoice, Satisfaction, Wonder 
+Jubilation;Glad, Happy, Joy, Merry, Triumph
+Liking;Affection, Affinity, Appreciate, Attached, Attracted, Desire, Devoted, Fancy, Favorite, Passion, Pleasure, Prefer, Relish, Sympathize, Tendency, Weakness 
+Optimism;Anticipation, Assurance, Bright, Calm, Certain, Cheer, Confidence, Ease, Elated, Encourage, Enthusiastic, Exhilarated, Expect, Happy, Hope, Positive, Sure, Trust 
+Pride;Assume, Choose, Cocky, Conceited, Delight, Dignity, Disdain, Egotistical, Gratified, Happy, Honor, Immodest, Insolence, Joy, Lofty, Narcissistic, Overconfident, Pleasure, Presume, Pretentious, Satisfaction, Self-regard, Self-respect, Self-satisfaction, Self-sufficiency, Self-trust, Self-worth, Smug, Snob, Vain  
+Satisfaction;Achievement, Amusement, Atone, Bliss, Cheerful, Comfort, Content, Delight, Ease, Enjoyment, Fulfill, Glad, Gratified, Happy, Joy, Justice, Pleasure, Pride, Relief, Resolute, Serene, Vindicated
+Sentimentality;Emotional, Melodramatic, Mushy, Nostalgia, Reminiscence, Sentiment 
+Sympathy;Affinity, Commiserate, Compassion, Empathy, Kind, Fond, Sensitive, Tenderness, Understanding, Unity, Warm
+Triumph;Celebrate, Delight, Elated, Exult, Festive, Joy, Jubilant, Merry, Pride, Rejoice
+Adoration;Admire, Adore, Attached, Crush, Devote, Esteem, Exalt, Glory, Honor, Idolize, Infatuate, Passion, Revere
+Affection;Adore, Attachment, Care, Concern, Crush, Desire, Devote, Friendly, Kind, Liking, Passion, Regard, Sentiment, Tender, Warm
+Arousal;Amorous, Erotic, Libido, Lust, Passion, Stimulated, Titillation 
+Attraction;Allure, Attractive, Captivate, Charm, Chemistry, Court, Enchantment, Endearment, Enthrall, Entice, Fascinated, Gravitate, Interest, Tempt 
+Desire;Admire, Ambition, Aspire, Attraction, Crave, Devote, Dote, Eager, Fancy, Fascinated, Fond, Greed, Hunger, Infatuate, Lascivious, Libido, Liking, Motive, Need, Passion, Rapture, Ravenousness, Relish, Salacious, Thirst, Urge, Voracious, Will, Wish, Yearn
+Ecstasy;Blessed, Cool, Delectation, Delight, Delirium, Elation, Enchant, Enthusiastic, Euphoria, Exaltation, Fervor, Glad, Happy, Inspired, Intoxicated, Joy, Rapture, Ravish, Trance 
+Enthrallment;Attentive, Captivated, Concentrate, Engrossed, Fascinated, Immersed, Intentness, Preoccupation 
+Euphoria;Bliss, Dream, Ecstasy, Elate, Exalt, , Exhilarated, Glee, Intoxicate, Joy, Jubilant, Madness, Rapture, Relaxation 
+Fondness;Affection, Attachment, Devotion, Fancy, Kind, Partial, Penchant, Prefer, Tender, Weakness
+Infatuation;Crush, Desire, Fascinated, Obsess, Passion
+Love;Affection, Amorous, Appreciation, Attachment, Cherish, Crush, Delight, Devoted, Emotion, Enchant, Enjoy, Fond, Friendly, Infatuate, Involved, Like, Lust, Partial, Passion, Rapture, Regard, Relish, Respect, Tender, Worship, Yearn
+Lust;Aphrodisiac, Covet, Crave, Desire, Eroticism, Excitement, Greed, Hunger, Lascivious, Lewd, Libido, Licentious, Long, Salacious, Sensual, Thirst, Urge, Wantonness 
+Passion;Affection, Devotion, Distress, Eager, Ecstasy, Excitement, Feeling, Fire, Frenzy, Fury, Intense, Ire, Joy, Rage, Rapture, Resentment, Sentiment, Spirit, Temper, Vehement, Warm, Wrath, Zeal 
+Pleasure;Amusement, Bliss, Comfort, Content, Ease, Enjoy, Entertainment, Glad, Gratified, Indulgence, Joy, Relish, Revelry, Satisfaction, Thrill, Titillate 
+Tenderness;Benevolent, Fond, Friendly, Kind, Sympathy, Warm
+Agony;Afflicted, Anguish, Distress, Misery, Passion, Torment, Torture, Woe
+Anguish;Affliction, Agony, Distress, Grief, Heartache, Heartbreak, Hurt, Misery, Sorrow, Suffering, Torment, Torture, Woe, Wretched
+Defeat;Annihilation, Beaten, Broken, Discomfort, Embarrassment, Failure, Loss, Ruin, Trapped
+Depression;Blue, Bummed, Dejected, Desolate, Desperate, Despondent, Distress, Dreary, Dull, Ennui, Gloom, Heavy, Hopeless, Melancholy, Misery, Mortified, Sorrow, Troubled, Unhappy, Woefulness, Worry
+Despair;Anguish, Dejection, Desperation, Despondent, Discourage, Disheartened, Forlorn, Gloom, Melancholy, Misery, Pain, Sorrow, Wretched
+Disappointment;Bitter, Bummer, Defeated, Disaster, Discouraged, Down, Failure, Mistaken
+Dismay;Agitation, Alarm, Anxiety, Apprehension, Blue, Bummer, Chagrin, Discourage, Disheartenment, Disillusioned, Down, Dread, Fright, Funk, Horror, Panic, Terror, Trepidation, Upset
+Gloom;Anguish, Bitter, Chagrin, Cheerful, Dejected, Desolate, Despair, Despondency, Discouragement, Dismal, Distress, Downhearted, Grief, Heavy, Horror, Misery, Mourning, Oppressed, Pensive, Pessimistic, Sorrow, Unhappy, Vexed, Weary, Woe
+Glumness;Anguish, Bitter, Blue, Chagrin, Cheerless, Dejected, Depressed, Desolate, Despair, Despondence, Despondency, Discouraged, Dismal, Distress, Downhearted
+Grief;Affliction, Agony, Anguish, Bemoaned, Bereavement, Care, Dejected, Depression, Desolate, Despair, Despondent, Discomfort, Disquiet, Distress, Gloom, Grievance, Harassment, Heartache, Heartbreak, Lament, Malaise, Melancholy, Misery, Mortification, Mournful, Pain, Regret, Remorseful, Sorrow, Trouble, Worry
+Grouchiness;Annoyance, Cross, Impatient, Irritable, Sours, Sullen, Surly, Touchy
+Guilty;Doomed, Judged, Regret, Remorseful, Responsible, Sorry, Wrong
+Homesickness;Loneliness
+Hopelessness;Anguish, Dejection, Desperate, Despondence, Discouraged, Dishearted, Forlorn, Gloom, Melancholy, Misery, Pain, Sorrow, Wretched
+Hurt;Agonizing, Crushed, Damaged, Distressed, Indignant, Offended, Pained, Resentful, Sore, Suffering, Wounded
+Hysteria;Agitation, Delirium, Excitement, Hysterics, Madness, Mirth, Nervousness, Panic, Unreason
+Isolation;Aloneness, Aloofness, Desolate, Detached, Private, Reclusiveness, Remoteness, Retreat, Solitude
+Loneliness;Alienation, Aloneness, Desolation, Forlornness, Heartache, Lonesome, Solitude, Withdrawal
+Longing;Ambition, Aspiration, Covet, Crave, Hunger, Pining, Thirst, Wish, Yearn
+Melancholy;Blue, Bored, Bummer, Dejected, Despair, Desperate, Despondent, Dismiss, Ennui, Funk, Gloom, Grief, Miserable, Mournful, Pensive, Sorrowful, Wistful
+Misery;Ache, Agony, Anguish, Blue, Depression, Desolation, Despair, Despondent, Discomfort, Distress, Gloom, Grief, Headache, Heartache, Hurt, Melancholy, Sorrow, Suffering, Torment, Torture, Worry
+Regret;Anguish, Annoyance, Bitter, Care, Concern, Demur, Disappointment, Discomfort, Dissatisfaction, Grief, Heartache, Heartbreak, Lament, Nostalgia, Regretful, Remorse, Self-accusation, Self-condemnation, Self-disgust, Self-reproach, Sorrow, Worry
+Rejection;Denial, Refusal
+Remorse;Anguish, Grief, Guilt, Penance, Pity, Regret, Remorse, Repentance, Shame, Sorrow
+Sorrow;Agony, Anguish, Blue, Dejected, Depression, Distress, Grieve, Heartache, Heartbreak, Lament, Melancholy, Misery, Misfortune, Mourning, Pain, Regret, Remorse, Repentance, Suffer, Trouble, Worry, Wretched
+Suffering;Anguish, Difficult, Discomfort, Distress, Misery, Torment, Torture
+Unhappiness;Gloom, Grief, Heartache, Joyless, Melancholy, Misery, Woe

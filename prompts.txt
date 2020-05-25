@@ -1,2 +1,7 @@
-How are you?
-Whats your mood?
+What emotion(s) do you associate with "Happiness"?
+What emotion(s) do you associate with "Love"?
+What emotion(s) do you associate with "Lust"?
+What emotion(s) do you associate with "Sadness"?
+What emotion(s) do you associate with "Angry"?
+What emotion(s) do you associate with "Hate"?
+What emotion(s) do you associate with "Fear"?

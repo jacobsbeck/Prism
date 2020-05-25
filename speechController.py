@@ -1,6 +1,7 @@
 import speech_recognition as sr
 from enum import Enum
 from speech_recognition import Microphone
+from threading import Thread
 
 class Recognizers(Enum):
     Sphinx=1
@@ -69,7 +70,7 @@ class SpeechControl:
                 with self.mic as source:
                     #self.recognizer.adjust_for_ambient_noise(source)
                     self.recognizer.adjust_for_ambient_noise(source)
-                    self.display.showRecording()
+                    self.display.hideProcessing()
                     audio = self.recognizer.record(source, 3)
                     self.display.showProcessing()
                 if self.recognizer_name == Recognizers.Sphinx:
@@ -85,6 +86,7 @@ class SpeechControl:
                 print(cur_str)
                 if (self.display != None):
                     self.display.updateSpeechDetected(cur_str)
+                    #Thread(target = self.display.updateSpeechDetected, args=(cur_str,)).start()
                 self.word_classify_check(cur_str)
             except KeyboardInterrupt:
                 self.lights.endLights()

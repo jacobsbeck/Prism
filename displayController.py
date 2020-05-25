@@ -1,4 +1,5 @@
 from tkinter import *
+from pyglet import font
 from PIL import Image, ImageTk
 from itertools import count, cycle
 #from guizero import *
@@ -9,6 +10,8 @@ from threading import Thread
 
 class DisplayControl(Frame):
     def __init__(self, promptList):
+        font.add_file('ProductSans.ttf')
+        customFont = ('Helvetica', 27)
         self.window = Tk()
         super().__init__(self.window)
         self.window.attributes('-fullscreen', True)
@@ -16,12 +19,12 @@ class DisplayControl(Frame):
 
         self.prompt_list = promptList.prompts
         self.prompt_index = 0
-
-        self.frame = Frame(self.window, relief='raised', borderwidth=2)
+        self.frame = Frame(self.window, relief='raised', bg='black')
         self.frame.pack(fill=BOTH, expand=YES)
         self.frame.pack_propagate(False)
 
         self.label = ImageLabel(self.frame)
+        self.label.place(x=0, y=0, relwidth=1, relheight=1)
         self.label.pack()
         self.label.load('background.gif')
 
@@ -29,13 +32,13 @@ class DisplayControl(Frame):
         #photo = ImageTk.PhotoImage(image)
 
         #self.label = Label(self.frame, image=photo)
-        self.label.place(x=0, y=0, relwidth=1, relheight=1)
-        center_frame = Frame(self.frame, relief='raised', borderwidth=2)
-        center_frame.place(relx=0.5, rely=0.5, anchor=CENTER)
-        self.processing = ImageLabel(center_frame)
+
+        center_frame = Frame(self.frame, relief='raised', bg='black')
+        center_frame.place(relx=0.5, rely=0.5, width=600, anchor=S)
+        self.processing = ImageLabel(center_frame, bg='black')
         self.processing.pack()
         self.processing.load('processing.gif')
-        Label(center_frame, text=self.prompt_list[self.prompt_index], width=8).pack()
+        self.label = Label(center_frame, text=self.prompt_list[self.prompt_index], width=500, bg='black', fg='white', font=customFont)
         #Label(center_frame, text='Education', width=8).pack()
         #self.container = Label(self.window, text=self.prompt_list[self.prompt_index], image=tk_image, compound='center', fg="white", font=("Product Sans Regular", 27))
         self.label.pack()
@@ -54,48 +57,27 @@ class DisplayControl(Frame):
         #self.recording_symbol = Picture(self.window, image="processing.gif", height=50, width=50)
         """
 
-    def playBackgroundAnimation(self):
-        curBackground = 0
-        while True:
-            if (curBackground == 3):
-                curBackground = 0
-            if (curBackground == 0):
-                image = Image.open('background2.png')
-                print("hit1")
-            elif (curBackground == 1):
-                image = Image.open('background2.png')
-                print("hit2")
-            else:
-                image = Image.open('background3.png')
-                print("hit3")
-
-            photo = ImageTk.PhotoImage(image)
-            self.label = Label(self.frame, image=photo)
-            self.label.place(x=0, y=0, relwidth=1, relheight=1)
-            self.label.image = photo
-            #self.container = Label(self.window, text=self.prompt_list[self.prompt_index], image=tk_image, compound='center', fg="white", font=("Product Sans Regular", 27))
-            self.label.pack()
-            self.window.update()
-            curBackground = curBackground + 1
-            time.sleep(0.5)
-
     def updatePrompt(self):
         self.prompt_index = self.prompt_index + 1
         if (self.prompt_index >= len(self.prompt_list)):
             self.prompt_index = 0
-        self.prompt_text.value = self.prompt_list[self.prompt_index]
+        self.label['text'] = self.prompt_list[self.prompt_index]
     
     def updateSpeechDetected(self, detected):
-        self.speech_text.value = detected
+        self.label['text'] = detected
+        self.window.update()
+        time.sleep(3)
         self.updatePrompt()
         self.window.update()
     
-    def showRecording(self):
-        self.recording_symbol.image = "recording.png"
+    def hideProcessing(self):
+        self.processing.pack_forget()
         self.window.update()
     
     def showProcessing(self):
-        self.recording_symbol.image = "processing.gif"
+        self.label.pack_forget()
+        self.processing.pack()
+        self.label.pack()
         self.window.update()
         
     def showDisplay(self):
@@ -137,7 +119,3 @@ class ImageLabel(Label):
         if self.frames:
             self.config(image=next(self.frames))
             self.after(self.delay, self.next_frame)
-
-prompts = Prompts("prompts.txt")
-app = DisplayControl(prompts)
-app.showDisplay()
