@@ -28,6 +28,8 @@ Software:
 * colorsys
 * colour
 * rgbxy
+* pyinflect
+* Pillow
 	
 ## Setup
 To run this project, install the appropriate packages:
@@ -43,6 +45,8 @@ $ pip install phue
 $ pip install colorsys
 $ pip install rgbxy
 $ pip install colour
+$ pip install pyinflect
+$ pip install Pillow
 ```
 
 ## Run Project
@@ -57,10 +61,3 @@ The system is broken up into four different controllers, main, speech, light, an
 ```
 $ sudo bash ./mainStart.sh
 ```
-
-
-To run the pervious version of the program, run the following code:
-```
-$ sudo bash ./speechStart.sh
-```
-
